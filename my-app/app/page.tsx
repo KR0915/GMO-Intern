@@ -1,10 +1,11 @@
-import Image from "next/image";
+import React from 'react';
 import Auth from "./components/Auth";
 
-export default function Home() {
+export default function Home() { 
   return (
-    <div className="home">
+    <div>
+      <h1>Home</h1>
       <Auth />
-    </div>
+    </div> 
   );
 }
