@@ -21,17 +21,11 @@ interface MenuItem {
 // ];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  }
-
   return (
     <header className="bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         <div className="flex items-center">
-          <img src="https://manage.conoha.jp/Content/Images/ConoHa/Common/logo.png" alt="Logo" className="h-10 mr-3" />
+        <Image src="/images/conoHa.png" alt="Logo" width={125} height={38} className="h-10 mr-3" />
           <nav className="flex space-x-4">
             <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
               <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
