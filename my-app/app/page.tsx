@@ -3,7 +3,7 @@ import Service from './components/Service';  // Serviceコンポーネントを�
 import Header from './components/Header'; // Headerコンポーネントをインポーネート
 import Sidebar from './components/Sidebar'; // Sidebarコンポーネントをインポート
 
-export default function HomePage () {
+export default function Home() {
   return (
     <div>
       <Header />
@@ -15,4 +15,4 @@ export default function HomePage () {
       </div>
     </div>
   );
-};
+}
