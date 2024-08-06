@@ -1,12 +1,11 @@
 import React from 'react';
-import Auth from "./components/Auth";
 import Service from './components/Service';  // Serviceコンポーネントをインポート
 import Header from './components/Header'; // Headerコンポーネントをインポーネート
 import Sidebar from './components/Sidebar'; // Sidebarコンポーネントをインポート
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex">
       <Header />
       <div className="flex">
         <Sidebar />
