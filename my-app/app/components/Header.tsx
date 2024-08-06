@@ -5,21 +5,6 @@ import Image from 'next/image'
 import { useState } from 'react';
 import DropdownMenu from './DropdownMenu';
 
-interface MenuItem {
-  icon: string;
-  label: string;
-}
-
-// const menuItems: MenuItem[] = [
-//     { icon: '', label: 'VPS' },
-//     { icon: '💻', label: 'WING' },
-//     { icon: '🔧', label: 'GAME' },
-//     { icon: '💽', label: 'AI' },
-//     { icon: '🛜', label: 'ヘルプ' },
-//     { icon: '🛜', label: 'お知らせ' },
-//     { icon: '🛜', label: 'アカウント名' },
-// ];
-
 export default function Header() {
   return (
     <header className="bg-white shadow-md">
