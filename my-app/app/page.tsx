@@ -9,9 +9,9 @@ export default function HomePage () {
       <Header />
       <div className="flex">
         <Sidebar />
-        <div className="flex flex-1 justify-center items-center">
+        <main className="flex-1">
           <Service />
-        </div>
+        </main>
       </div>
     </div>
   );
