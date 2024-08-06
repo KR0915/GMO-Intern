@@ -57,6 +57,12 @@ const Header: React.FC = () => {
           </a>
           <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
             <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 4a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L10 9l6-4.99V4H4zm0 2.01V16h12V6.01L10 11 4 6.01z" />
+          </svg>
+            お問い合わせ
+          </a>
+          <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
+            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M8.5 2a6.5 6.5 0 00-6.5 6.5v1a6.5 6.5 0 0013 0v-1a6.5 6.5 0 00-6.5-6.5zm0 2a4.5 4.5 0 014.5 4.5v1a4.5 4.5 0 01-9 0v-1a4.5 4.5 0 014.5-4.5zm0 9a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
             </svg>
             ヘルプ
