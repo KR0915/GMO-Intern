@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";  // これを追加
+
+import React, { useState } from 'react';
 
 interface ServiceItem {
   icon: string;
@@ -15,7 +17,12 @@ const services: ServiceItem[] = [
 ];
 
 // 丸いボタンのラベル
-const roundButtonLabels = ['かんたんKUSANAGI', 'Mattermost', 'Docker', 'LAMP(PHP)', 'Metabase'];
+const roundButtonLabelsApplication = ['かんたんKUSANAGI', 'Mattermost', 'Docker', 'LAMP(PHP)', 'Metabase'];
+const roundButtonLabelsOS = [
+  'CentOS', 'Ubuntu', 'Debian', 'Rocky Linux', 'AlmaLinux',
+  'Oracle Linux', 'MIRACLE LINUX', 'FreeBSD', 'Arch Linux', 'NetBSD',
+  'OpenBSD'
+];
 
 // 横長の長方形ボタンのラベル
 const rectangleButtonLabels = [
@@ -27,8 +34,28 @@ const rectangleButtonLabels = [
   'ArchiveBox', 'Auto-GPT', 'BabyAGI UI', 'GPTEngineer', 'StableStudio'
 ];
 
+// イメージタイプのオプション
+const imageTypeOptions = [
+  'OS', 
+  'アプリケーション', 
+  '保存イメージ', 
+  '自動バックアップ'
+];
+
 // サービスコンポーネント
 const Services: React.FC = () => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [showMore, setShowMore] = useState(false);
+
+  const handleOptionClick = (option: string) => {
+    setSelectedOption(option);
+    setShowMore(false); // Reset "show more" when switching options
+  };
+
+  const toggleShowMore = () => {
+    setShowMore(!showMore);
+  };
+
   return (
     <div className="grid grid-cols-3 gap-4 p-4">
       <h1 className="col-span-3 text-2xl font-bold text-center mb-4">サービス</h1>
@@ -43,28 +70,56 @@ const Services: React.FC = () => {
       <div className="col-span-3 flex justify-center items-center mb-4">
         <h1 className="text-2xl font-bold text-center mr-4">イメージタイプ</h1>
         <div>
-          <button className="bg-blue-500 text-white rounded px-4 py-2 mx-2">OS</button>
-          <button className="bg-blue-500 text-white rounded px-4 py-2 mx-2">アプリケーション</button>
-          <button className="bg-blue-500 text-white rounded px-4 py-2 mx-2">保存イメージ</button>
-          <button className="bg-blue-500 text-white rounded px-4 py-2 mx-2">自動バックアップ</button>
+          {imageTypeOptions.map(option => (
+            <button
+              key={option}
+              onClick={() => handleOptionClick(option)}
+              className={`rounded px-4 py-2 mx-2 ${selectedOption === option ? 'bg-blue-600 text-white' : 'bg-blue-500 text-white'}`}
+            >
+              {option}
+            </button>
+          ))}
         </div>
       </div>
-      <div className="col-span-3 flex justify-center items-center mb-4 gap-4">
-        {roundButtonLabels.map((label, index) => (
-          <button key={index} className="h-24 w-36 rounded-full border border-black bg-white text-black text-center px-4 py-2 leading-tight">
-            {label}
-          </button>
-        ))}
-      </div>
-      <div className="col-span-3 grid grid-cols-5 gap-4 mb-4">
-        {rectangleButtonLabels.map((label, index) => (
-          <button
-            key={index}
-            className="h-20 w-full border border-black bg-white text-black rounded text-center px-2 py-1 leading-tight"
-            dangerouslySetInnerHTML={{ __html: label }} // HTMLを直接レンダリング
-          />
-        ))}
-      </div>
+      {selectedOption === 'アプリケーション' && (
+        <>
+          <div className="col-span-3 flex justify-center items-center mb-4 gap-4">
+            {roundButtonLabelsApplication.map((label, index) => (
+              <button key={index} className="h-24 w-36 rounded-full border border-black bg-white text-black text-center px-4 py-2 leading-tight">
+                {label}
+              </button>
+            ))}
+          </div>
+          {showMore && (
+            <div className="col-span-3 grid grid-cols-5 gap-4 mb-4">
+              {rectangleButtonLabels.map((label, index) => (
+                <button
+                  key={index}
+                  className="h-20 w-full border border-black bg-white text-black rounded text-center px-2 py-1 leading-tight"
+                  dangerouslySetInnerHTML={{ __html: label }} // HTMLを直接レンダリング
+                />
+              ))}
+            </div>
+          )}
+          <div className="col-span-3 flex justify-center">
+            <button
+              onClick={toggleShowMore}
+              className="bg-gray-500 text-white rounded px-4 py-2 mt-4"
+            >
+              {showMore ? '少なく見る' : 'もっと見る'}
+            </button>
+          </div>
+        </>
+      )}
+      {selectedOption === 'OS' && (
+        <div className="col-span-3 flex flex-wrap justify-center items-center mb-4 gap-4">
+          {roundButtonLabelsOS.map((label, index) => (
+            <button key={index} className="h-24 w-36 rounded-full border border-black bg-white text-black text-center px-4 py-2 leading-tight">
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
