@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar'; // Sidebarコンポーネントを�
 
 export default function Home() {
   return (
-    <div className="flex">
+    <div>
       <Header />
       <div className="flex">
         <Sidebar />
