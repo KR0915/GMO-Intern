@@ -1,4 +1,9 @@
+"use client";
+
 import React from 'react';
+import Image from 'next/image'
+import { useState } from 'react';
+import DropdownMenu from './DropdownMenu';
 
 interface MenuItem {
   icon: string;
@@ -15,7 +20,13 @@ interface MenuItem {
 //     { icon: '🛜', label: 'アカウント名' },
 // ];
 
-const Header: React.FC = () => {
+export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  }
+
   return (
     <header className="bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
@@ -67,16 +78,9 @@ const Header: React.FC = () => {
             </svg>
             ヘルプ
           </a>
-          <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
-            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v2h2v-2zm0-8H9v6h2V5z" />
-            </svg>
-            アカウント名
-          </a>
+          <DropdownMenu />
         </div>
       </div>
     </header>
   );
 };
-
-export default Header;
