@@ -24,7 +24,7 @@ export default function Auth() {
           });
           if (error) throw error;
           //   alert("ログインに成功しました!");
-          router.push({ pathname: "/dashboard", query: { display: 'ok' } } as unknown as string);
+          router.push("/dashboard");
         } catch (error) {
           alert((error as any).message);
         } finally {

@@ -4,6 +4,7 @@ import React from 'react';
 import { supabase } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Logout from '../components/Logout';
 
 export default function Account() {
     // const router = useRouter();
@@ -23,6 +24,7 @@ export default function Account() {
     return (
         <div className="account">
             <h1>Account</h1>
+            <Logout />
         </div>
     );
 }
