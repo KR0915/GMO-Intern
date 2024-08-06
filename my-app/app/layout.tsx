@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from './components/Header'; // Headerコンポーネントをインポート
 import Sidebar from './components/Sidebar'; // Sidebarコンポーネントをインポート
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
