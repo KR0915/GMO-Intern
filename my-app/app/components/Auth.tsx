@@ -23,8 +23,8 @@ export default function Auth() {
             password,
           });
           if (error) throw error;
-        //   alert("ログインに成功しました!");
-            router.push("/dashboard");
+          //   alert("ログインに成功しました!");
+          router.push({ pathname: "/dashboard", query: { display: 'ok' } } as unknown as string);
         } catch (error) {
           alert((error as any).message);
         } finally {
