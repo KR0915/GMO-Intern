@@ -27,15 +27,14 @@ const menuItems: MenuItem[] = [
 // サイドバーコンポーネントを定義
 const Sidebar: React.FC = () => {
   return (
-    <div className="w-64 h-screen bg-gray-800 text-white flex flex-col">
-      {/* 上部の空白を追加 */}
-      <div className="mt-20"></div>
+    <div className="w-64 min-h-screen bg-white text-blue-400 flex flex-col">
       {/* メニューリスト */}
       <ul className="flex-1 p-4 space-y-2">
         {menuItems.map((item, index) => (
           <li
             key={index}
-            className="flex items-center p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
+            className={`flex items-center p-3 rounded transition-colors cursor-pointer 
+              ${item.label === 'サーバー追加' ? 'bg-blue-400 text-white' : 'hover:bg-gray-100'}`}
           >
             <span className="mr-3 text-xl">{item.icon}</span>
             <span className="text-lg">{item.label}</span>
