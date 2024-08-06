@@ -1,5 +1,20 @@
 import React from 'react';
 
+interface MenuItem {
+  icon: string;
+  label: string;
+}
+
+// const menuItems: MenuItem[] = [
+//     { icon: '', label: 'VPS' },
+//     { icon: '💻', label: 'WING' },
+//     { icon: '🔧', label: 'GAME' },
+//     { icon: '💽', label: 'AI' },
+//     { icon: '🛜', label: 'ヘルプ' },
+//     { icon: '🛜', label: 'お知らせ' },
+//     { icon: '🛜', label: 'アカウント名' },
+// ];
+
 const Header: React.FC = () => {
   return (
     <header className="bg-white shadow-md">
@@ -27,11 +42,31 @@ const Header: React.FC = () => {
             </a>
             <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
               <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v2h2v-2zm0-8H9v6h2V5z" />
+                <path d="M13 2a7 7 0 00-7 7v1H5a3 3 0 00-3 3v4a3 3 0 003 3h10a3 3 0 003-3v-4a3 3 0 00-3-3h-1V9a7 7 0 00-7-7zm-1 14H8v-2h4v2zm0-4H8v-2h4v2z" />
               </svg>
               AI
             </a>
           </nav>
+        </div>
+        <div className="flex items-center space-x-4">
+          <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
+            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 2a1 1 0 00-1 1v14a1 1 0 001 1h2a1 1 0 001-1V3a1 1 0 00-1-1h-2zM4 8a1 1 0 00-1 1v2a1 1 0 001 1h1v2a1 1 0 001 1h1v-8H6a1 1 0 00-1 1v2H4V9a1 1 0 00-1-1H4z" />
+            </svg>
+            お知らせ
+          </a>
+          <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
+            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 2a6.5 6.5 0 00-6.5 6.5v1a6.5 6.5 0 0013 0v-1a6.5 6.5 0 00-6.5-6.5zm0 2a4.5 4.5 0 014.5 4.5v1a4.5 4.5 0 01-9 0v-1a4.5 4.5 0 014.5-4.5zm0 9a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+            </svg>
+            ヘルプ
+          </a>
+          <a href="#" className="text-gray-700 hover:text-blue-500 flex items-center">
+            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v2h2v-2zm0-8H9v6h2V5z" />
+            </svg>
+            アカウント名
+          </a>
         </div>
       </div>
     </header>
