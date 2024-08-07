@@ -115,7 +115,7 @@ export default function Services () {
       {services.map(service => (
         <button
           key={service.name}
-          className="bg-white border border-black shadow-md rounded-lg p-4 flex flex-col items-center text-center h-24 w-48"
+          className="bg-white border border-black shadow-md rounded-lg p-2 flex flex-col items-center text-center h-24 w-48"
         >
           <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
           <hr className="w-full mb-2" />
