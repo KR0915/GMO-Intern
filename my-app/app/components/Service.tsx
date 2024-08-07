@@ -1,3 +1,4 @@
+import { Princess_Sofia } from "next/font/google";
 import React, { useState } from "react";
 
 interface ServiceItem {
@@ -13,15 +14,17 @@ const services: ServiceItem[] = [
   { icon: "📊", name: "DBサーバー" },
 ];
 
-const roundButtonLabelsApplication = [
+const display_rectangleButtonLabels = [
   "かんたんKUSANAGI", "Mattermost", "Docker", "LAMP(PHP)", "Metabase"
 ];
+
 const roundButtonLabelsOS = [
   "CentOS", "Ubuntu", "Debian", "Rocky Linux", "AlmaLinux",
   "Oracle Linux", "MIRACLE LINUX", "FreeBSD", "Arch Linux", "NetBSD", "OpenBSD"
 ];
 
-const rectangleButtonLabels = [
+const storage_rectangleButtonLabels = [
+  "かんたんKUSANAGI", "Mattermost", "Docker", "LAMP(PHP)", "Metabase",
   "WordPress<br/>(KUSANAGI)", "Dokku", "Node.js", "webmin", "Prometheus",
   "Cacti Nagios", "Laravel", "LEMP(PHP)", "Mastodon", "Misskey",
   "Zabbix", "Ruby on Rails", "ownCloud", "Nextcloud", "GitLab",
@@ -52,7 +55,7 @@ const pricingData: Record<string, number[]> = {
   "３６ヶ月": [296, 468, 616, 1268, 2394, 5393, 13868, 28493]
 };
 
-const Services: React.FC = () => {
+export default function Services () {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
@@ -153,11 +156,11 @@ const Services: React.FC = () => {
       {selectedOption === "アプリケーション" && (
         <>
           <div className="col-span-3 flex justify-center items-center mb-4 gap-4">
-            {roundButtonLabelsApplication.map((label, index) => (
+            {display_rectangleButtonLabels.map((label, index) => (
               <button
                 key={index}
                 onClick={() => handleAppButtonClick(label)}
-                className={`h-24 w-36 rounded-full border border-black text-center px-4 py-2 leading-tight ${
+                className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tightt ${
                   selectedAppButton === label
                     ? "bg-blue-400 text-white"
                     : "bg-white text-black"
@@ -170,7 +173,7 @@ const Services: React.FC = () => {
 
           {showMore && (
             <div className="col-span-3 grid grid-cols-5 gap-4 mb-4">
-              {rectangleButtonLabels.map((label, index) => (
+              {storage_rectangleButtonLabels.map((label, index) => (
                 <button
                   key={index}
                   onClick={() => handleAppButtonClick(label)}
@@ -190,7 +193,7 @@ const Services: React.FC = () => {
               onClick={toggleShowMore}
               className="bg-gray-500 text-white rounded px-4 py-2 mt-4"
             >
-              {showMore ? "少なく見る" : "もっと見る"}
+              { showMore ? "閉じる" : "他のアプリケーションを表示する" }
             </button>
           </div>
 
@@ -295,5 +298,3 @@ const Services: React.FC = () => {
     </div>
   );
 };
-
-export default Services;
