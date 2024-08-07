@@ -24,7 +24,6 @@ const roundButtonLabelsOS = [
 ];
 
 const storage_rectangleButtonLabels = [
-  "かんたんKUSANAGI", "Mattermost", "Docker", "LAMP(PHP)", "Metabase",
   "WordPress<br/>(KUSANAGI)", "Dokku", "Node.js", "webmin", "Prometheus",
   "Cacti Nagios", "Laravel", "LEMP(PHP)", "Mastodon", "Misskey",
   "Zabbix", "Ruby on Rails", "ownCloud", "Nextcloud", "GitLab",
@@ -138,7 +137,7 @@ export default function Services () {
                   onClick={() => handleAppButtonClick(label)}
                   className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tightt ${
                     selectedAppButton === label
-                      ? "bg-blue-400 text-white"
+                      ? "bg-blue-300 text-white"
                       : "bg-white text-black"
                   }`}
                 >
@@ -155,7 +154,7 @@ export default function Services () {
                     onClick={() => handleAppButtonClick(label)}
                     className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tight ${
                       selectedAppButton === label
-                        ? "bg-blue-400 text-white"
+                        ? "bg-blue-300 text-white"
                         : "bg-white text-black"
                     }`}
                     dangerouslySetInnerHTML={{ __html: label }}
@@ -182,7 +181,7 @@ export default function Services () {
                     onClick={() => handlePricingClick(option)}
                     className={`rounded px-4 py-2 ${
                       selectedPricing === option
-                        ? "bg-blue-400 text-white"
+                        ? "bg-blue-300 text-white"
                         : "bg-white border border-black text-black"
                     }`}
                   >
@@ -201,7 +200,7 @@ export default function Services () {
                     onClick={() => handlePlanClick(option)}
                     className={`rounded px-4 py-2 ${
                       selectedPlan === option
-                        ? "bg-blue-400 text-white"
+                        ? "bg-blue-300 text-white"
                         : "bg-white border border-black text-black"
                     }`}
                   >
@@ -223,7 +222,7 @@ export default function Services () {
                   onClick={() => handleOSButtonClick(label)}
                   className={`h-24 w-36 rounded-full border border-black text-center px-4 py-2 leading-tight ${
                     selectedOSButton === label
-                      ? "bg-blue-400 text-white"
+                      ? "bg-blue-300 text-white"
                       : "bg-white text-black"
                   }`}
                 >
@@ -241,7 +240,7 @@ export default function Services () {
                     onClick={() => handlePricingClick(option)}
                     className={`rounded px-4 py-2 ${
                       selectedPricing === option
-                        ? "bg-blue-400 text-white"
+                        ? "bg-blue-300 text-white"
                         : "bg-white border border-black text-black"
                     }`}
                   >
@@ -260,7 +259,7 @@ export default function Services () {
                     onClick={() => handlePlanClick(option)}
                     className={`rounded px-4 py-2 ${
                       selectedPlan === option
-                        ? "bg-blue-400 text-white"
+                        ? "bg-blue-300 text-white"
                         : "bg-white border border-black text-black"
                     }`}
                   >
