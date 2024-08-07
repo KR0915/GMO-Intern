@@ -7,7 +7,7 @@ interface MoneySidebarProps {
 
 export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
     return (
-        <div className="ml-[1rem] border-l border-gray-400 pl-2 h-80 mt-10">
+        <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px]"> {/* ヘッダーの高さに合わせて調整 */}
             <div className="mt-4">
                 <p>選択されたプラン: {plan || '未選択'}</p>
                 <p>価格: {price ? `${price.toLocaleString()} 円 /月` : '未選択'}</p>

@@ -11,7 +11,7 @@ import { Fa6BrandsWordpress } from "./icon/WordPress";
 
 
 interface ServiceItem {
-  icon: React.ReactNode; // JSX要素を受け入れるように変更
+  icon: React.ReactNode;
   name: string;
 }
 
@@ -22,7 +22,7 @@ interface ServiceProps {
 
 
 const services: ServiceItem[] = [
-  { icon: <MaterialSymbolsDataTableOutline />, name: "VPS" }, // アイコンをReactコンポーネントに更新
+  { icon: <MaterialSymbolsDataTableOutline />, name: "VPS" },
   { icon: <MdiMicrosoftWindows />, name: "Windows Server" },
   { icon: <BiGpuCard />, name: "GPUサーバー" },
   { icon: <PhEnvelopeSimple />, name: "メールサーバー" },
@@ -137,6 +137,8 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
   };
 
   return (
+    <div className="flex flex-col mt-[70px]"> {/* ヘッダーの高さ分だけ下へ調整 */}
+    <div className="flex" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}> {/* 背景色を透明に設定 */}
     <div className="flex">
     <div className="col-span-3 bg-transparent p-4">
     <h1 className="text-2xl font-bold text-center mb-4">サービス</h1>
@@ -332,6 +334,8 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
           />
         </div>
         </div>
+      </div>
+      </div>
       </div>
   </div>
   );
