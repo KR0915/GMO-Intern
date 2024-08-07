@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const token = process.env.TOKEN as string;
 
     const endpoint =
-      "https://image-service.c3j1.conoha.io/v2/images?name=vmi-centos-stream9-amd64";
+      "https://image-service.c3j1.conoha.io/v2/images?limit=200";
     const response = await fetch(endpoint, {
       method: "GET",
       headers: {
