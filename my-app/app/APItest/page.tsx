@@ -6,18 +6,18 @@ export default function Page() {
   const [token, setToken] = useState("");
   const [item2, setItem2] = useState("");
 
-  async function getToken() {
-    const res = await fetch("/api/gettoken");
+  async function getToken() { 
+    const res = await fetch("/api/gettoken?user=d4b10aeb-7f1e-4e21-96c4-528a5afacd5b");
     const token = await res.json();
     setToken(token);
   }
 
   async function getVolumeID() {
-    const res = await fetch("/api/getvolumeid?user=****", {
+    const res = await fetch("/api/getvolumeid?user=d4b10aeb-7f1e-4e21-96c4-528a5afacd5b", {
       method: "POST",
       body: JSON.stringify({
         size: 500,
-        volume_type: "c3j1-ds02-add",
+        volume_type: "c3j1-ds02-boot",
       }),
     });
     const item2 = await res.json();
