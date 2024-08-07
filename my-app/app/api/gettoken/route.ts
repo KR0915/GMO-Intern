@@ -24,6 +24,10 @@ export async function GET(request: Request) {
     }catch(error){
       console.error('Unexpected error: ', error);
     }
+
+    userid = process.env.USERID;
+    password = process.env.PASSWORD;
+    projectname = process.env.PROJECTNAME;
     
     const endpoint = "https://identity.c3j1.conoha.io/v3/auth/tokens"; // APIのエンドポイント
     const response = await fetch(endpoint, {
