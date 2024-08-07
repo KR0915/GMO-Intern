@@ -6,7 +6,7 @@ export default function Page() {
   const [token, setToken] = useState("");
   const [item2, setItem2] = useState("");
 
-  async function getToken() {
+  async function getToken() { 
     const res = await fetch("/api/gettoken");
     const token = await res.json();
     setToken(token);
@@ -17,7 +17,7 @@ export default function Page() {
       method: "POST",
       body: JSON.stringify({
         size: 500,
-        volume_type: "c3j1-ds02-add",
+        volume_type: "c3j1-ds02-boot",
       }),
     });
     const item2 = await res.json();
