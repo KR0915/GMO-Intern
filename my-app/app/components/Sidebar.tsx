@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 // メニューアイテムの型を定義
 interface MenuItem {
@@ -31,14 +32,17 @@ const Sidebar: React.FC = () => {
       {/* メニューリスト */}
       <ul className="flex-1 p-4 space-y-2">
         {menuItems.map((item, index) => (
-          <li
-            key={index}
-            className={`flex items-center p-3 rounded transition-colors cursor-pointer 
-              ${item.label === 'サーバー追加' ? 'bg-blue-400 text-white' : 'hover:bg-gray-100'}`}
-          >
-            <span className="mr-3 text-xl">{item.icon}</span>
-            <span className="text-lg">{item.label}</span>
-          </li>
+          <Link href="/error/404" key={index} legacyBehavior>
+            <a>
+              <li
+                className={`flex items-center p-3 rounded transition-colors cursor-pointer 
+                  ${item.label === 'サーバー追加' ? 'bg-blue-400 text-white' : 'hover:bg-gray-100'}`}
+              >
+                <span className="mr-3 text-xl">{item.icon}</span>
+                <span className="text-lg">{item.label}</span>
+              </li>
+            </a>
+          </Link>
         ))}
       </ul>
     </div>
