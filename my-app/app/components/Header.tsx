@@ -13,7 +13,8 @@ import { MynauiQuestionCircle } from './icon/Question';
 
 export default function Header() {
   return (
-    <header className="bg-white border-b border-blue-400">
+    // ヘッダーを上部に固定
+    <header className="bg-white border-b border-blue-400 fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         <div className="flex items-center space-x-10">
           <div className="mx-4">
