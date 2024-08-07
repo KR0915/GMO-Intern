@@ -15,6 +15,12 @@ interface ServiceItem {
   name: string;
 }
 
+interface ServiceProps {
+  setSelectedPlan: (plan: string | null) => void;
+  setSelectedPrice: (price: number | null) => void;
+}
+
+
 const services: ServiceItem[] = [
   { icon: <MaterialSymbolsDataTableOutline />, name: "VPS" }, // アイコンをReactコンポーネントに更新
   { icon: <MdiMicrosoftWindows />, name: "Windows Server" },
@@ -57,6 +63,17 @@ const planOptions = [
   "512MB", "1GB", "2GB", "4GB", "8GB", "16GB", "32GB", "64GB"
 ];
 
+const planDetails = [
+  { size: "512MB", cpu: "CPU 1Core", ssd: "SSD 30GB", price: 750 },
+  { size: "1GB", cpu: "CPU 2Core", ssd: "SSD 100GB", price: 1064 },
+  { size: "2GB", cpu: "CPU 3Core", ssd: "SSD 100GB", price: 2032 },
+  { size: "4GB", cpu: "CPU 4Core", ssd: "SSD 100GB", price: 3968 },
+  { size: "8GB", cpu: "CPU 6Core", ssd: "SSD 100GB", price: 8082 },
+  { size: "16GB", cpu: "CPU 8Core", ssd: "SSD 100GB", price: 15730 },
+  { size: "32GB", cpu: "CPU 12Core", ssd: "SSD 100GB", price: 31460 },
+  { size: "64GB", cpu: "CPU 24Core", ssd: "SSD 100GB", price: 59290 }
+];
+
 const pricingData: Record<string, number[]> = {
   時間課金: [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
   "１ヶ月": [459, 762, 1258, 2407, 4827, 9746, 22099, 44198],
@@ -67,15 +84,17 @@ const pricingData: Record<string, number[]> = {
   "３６ヶ月": [296, 468, 616, 1268, 2394, 5393, 13868, 28493]
 };
 
-export default function Services () {
+export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<string | null>(null);
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
   const [rootPassword, setRootPassword] = useState("");
   const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
+
+  const selectedPrice = selectedPricing && selectedPlanLocal ? pricingData[selectedPricing][planOptions.indexOf(selectedPlanLocal)] : null;
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
@@ -83,7 +102,9 @@ export default function Services () {
     setSelectedAppButton(null);
     setSelectedOSButton(null);
     setSelectedPricing(null);
+    setSelectedPlanLocal(null);
     setSelectedPlan(null);
+    setSelectedPrice(null);
     setRootPassword("");
     setNameTag("vps-2024-08-07-10-03");
   };
@@ -98,10 +119,17 @@ export default function Services () {
 
   const handlePricingClick = (option: string) => {
     setSelectedPricing(option);
+    setSelectedPlanLocal(null); // Reset plan when pricing changes
+    setSelectedPlan(null);
+    setSelectedPrice(null);
   };
 
   const handlePlanClick = (option: string) => {
+    const priceIndex = planOptions.indexOf(option);
+    const price = selectedPricing ? pricingData[selectedPricing][priceIndex] : null;
+    setSelectedPlanLocal(option);
     setSelectedPlan(option);
+    setSelectedPrice(price);
   };
 
   const toggleShowMore = () => {
@@ -109,6 +137,7 @@ export default function Services () {
   };
 
   return (
+    <div className="flex">
     <div className="col-span-3 bg-transparent p-4">
     <h1 className="text-2xl font-bold text-center mb-4">サービス</h1>
     <div className="grid grid-cols-4 gap-4">
@@ -208,20 +237,20 @@ export default function Services () {
         </div>
     
         <div className="flex flex-col items-center mt-4">
-          <h2 className="text-xl font-bold mb-2">プラン</h2>
-          <div className="flex gap-4 flex-wrap justify-center">
-            {planOptions.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handlePlanClick(option)}
-                className={`rounded px-4 py-2 ${
-                  selectedPlan === option
-                    ? "bg-blue-400 text-white"
-                    : "bg-white border border-black text-black"
-                }`}
-              >
-                {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
-              </button>
+              <h2 className="text-xl font-bold mb-2">プラン</h2>
+              <div className="flex gap-4 flex-wrap justify-center">
+                {planOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePlanClick(option)}
+                    className={`rounded px-4 py-2 ${
+                      selectedPlanLocal === option 
+                      ? "bg-blue-400 text-white" 
+                      : "bg-white border border-black text-black"
+                    }`}
+                  >
+                    {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
+                  </button>
             ))}
           </div>
         </div>
@@ -258,19 +287,22 @@ export default function Services () {
                 </button>
               ))}
             </div>
-          </div><div className="flex flex-col items-center mt-4">
-            <h2 className="text-xl font-bold mb-2">プラン</h2>
-            <div className="flex gap-4 flex-wrap justify-center">
-              {planOptions.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePlanClick(option)}
-                  className={`rounded px-4 py-2 ${selectedPlan === option
-                      ? "bg-blue-400 text-white"
-                      : "bg-white border border-black text-black"}`}
-                >
-                  {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
-                </button>
+          </div>
+          <div className="flex flex-col items-center mt-4">
+              <h2 className="text-xl font-bold mb-2">プラン</h2>
+              <div className="flex gap-4 flex-wrap justify-center">
+                {planOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePlanClick(option)}
+                    className={`rounded px-4 py-2 ${
+                      selectedPlanLocal === option 
+                      ? "bg-blue-400 text-white" 
+                      : "bg-white border border-black text-black"
+                    }`}
+                  >
+                    {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
+                  </button>
               ))}
             </div>
           </div>
@@ -298,6 +330,7 @@ export default function Services () {
             onChange={e => setNameTag(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded"
           />
+        </div>
         </div>
       </div>
   </div>
