@@ -1,17 +1,22 @@
-import { Princess_Sofia } from "next/font/google";
 import React, { useState } from "react";
+import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
+import { MdiMicrosoftWindows } from "./icon/WindowServer";
+import { BiGpuCard } from "./icon/GPUServer";
+import { PhEnvelopeSimple } from "./icon/MailServer";
+import { MdiDatabase } from "./icon/DBServer";
+
 
 interface ServiceItem {
-  icon: string;
+  icon: React.ReactNode; // JSX要素を受け入れるように変更
   name: string;
 }
 
 const services: ServiceItem[] = [
-  { icon: "☁️", name: "VPS" },
-  { icon: "🖥️", name: "Windows Server" },
-  { icon: "💿", name: "GPUサーバー" },
-  { icon: "✉️", name: "メールサーバー" },
-  { icon: "📊", name: "DBサーバー" },
+  { icon: <MaterialSymbolsDataTableOutline />, name: "VPS" }, // アイコンをReactコンポーネントに更新
+  { icon: <MdiMicrosoftWindows />, name: "Windows Server" },
+  { icon: <BiGpuCard />, name: "GPUサーバー" },
+  { icon: <PhEnvelopeSimple />, name: "メールサーバー" },
+  { icon: <MdiDatabase />, name: "DBサーバー" },
 ];
 
 const display_rectangleButtonLabels = [
@@ -97,7 +102,6 @@ export default function Services () {
 
   return (
     <div className="col-span-3 bg-gray-200 p-4">
-
     <h1 className="text-2xl font-bold text-center mb-4">サービス</h1>
     <div className="grid grid-cols-4 gap-4">
       {services.map(service => (
