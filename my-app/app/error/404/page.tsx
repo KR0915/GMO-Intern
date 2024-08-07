@@ -14,5 +14,6 @@ export default function Custom404() {
                 <a className="text-black hover:text-blue-500">ダッシュボードに戻る</a>
             </Link>
         </div>
+        
     );
 }

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 interface MenuItem {
   icon: string;
   label: string;
+  subItems?: string[];
 }
 
 // メニューアイテムのオプションを作成
@@ -12,7 +13,7 @@ const menuItems: MenuItem[] = [
   { icon: '💻', label: 'サーバー' },
   { icon: '🔧', label: 'ストレージ' },
   { icon: '💽', label: 'イメージ' },
-  { icon: '🛜', label: 'ネットワーク' },
+  { icon: '🛜', label: 'ネットワーク', subItems: ['追加IPアドレス', 'プライベートネットワーク', 'ロードバランサー'] },
   { icon: '🔑', label: 'セキュリティ' },
   { icon: '📁', label: 'オブジェクトストレージ' },
   { icon: '🌎', label: 'DNS' },

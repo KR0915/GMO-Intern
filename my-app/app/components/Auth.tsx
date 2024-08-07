@@ -3,13 +3,10 @@
 import React from "react";
 import { supabase } from "@/utils/supabase";
 import { useRouter } from "next/navigation";
+import Loading from './Loading';
 
 export default function Auth() {
     const router = useRouter();
-
-    // const clickHundler = () => {
-    //     router.push("/account");
-    // };
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -23,7 +20,6 @@ export default function Auth() {
               password,
           });
           if (error) throw error;
-          //   alert("ログインに成功しました!");
           localStorage.setItem("userEmail", email); // EmailをlocalStorageに保存
           // ログイン成功時にユーザー情報をDBに保存（存在しない場合）
           if (data.user) {
@@ -94,6 +90,7 @@ export default function Auth() {
 
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            {loading && <Loading />}
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-center font-bold">ログイン</h1>
@@ -112,7 +109,7 @@ export default function Auth() {
                             className="w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
                         />
                         <button onClick={handleLogin} disabled={loading} className="w-full px-4 py-2 bg-[#12B8D7] rounded-lg">Login</button>
-                        <button onClick={handleSignUp} disabled={loading}className="w-full px-4 py-2 bg-[#12B8D7] rounded-lg">Sign Up</button>
+                        <button onClick={handleSignUp} disabled={loading} className="w-full px-4 py-2 bg-[#12B8D7] rounded-lg">Sign Up</button>
                 </div>
             </div>
         </div>
