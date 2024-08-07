@@ -5,7 +5,7 @@ export async function GET(request: Request) {
       const {searchParams} = new URL(request.url);
       const user = searchParams.get("user");
       const token = process.env.TOKEN as string; //修正
-      const projectname = process.env.PROJECTNAME; // 修正
+      const projectname = process.env.NEXT_PUBLIC_PROJECTNAME; // 修正
 
       const endpoint = `https://block-storage.c3j1.conoha.io/v3/${projectname}/types`;
       const response = await fetch(endpoint, {

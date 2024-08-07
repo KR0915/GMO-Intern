@@ -209,9 +209,9 @@ const createVPS = async (token, info) => {
 };
 
 require("dotenv").config({ path: ".env.local" });
-const userid = process.env.USERID;
-const password = process.env.PASSWORD;
-const projectname = process.env.PROJECTNAME;
+const userid = process.env.NEXT_PUBLIC_USERID;
+const password = process.env.NEXT_PUBLIC_PASSWORD;
+const projectname = process.env.NEXT_PUBLIC_PROJECTNAME;
 
 let serverinfo = {};
 serverinfo.size = 100;
