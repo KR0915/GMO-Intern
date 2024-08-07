@@ -109,7 +109,7 @@ export default function Services () {
   };
 
   return (
-    <div className="col-span-3 bg-gray-200 p-4">
+    <div className="col-span-3 bg-transparent p-4">
     <h1 className="text-2xl font-bold text-center mb-4">サービス</h1>
     <div className="grid grid-cols-4 gap-4">
       {services.map(service => (

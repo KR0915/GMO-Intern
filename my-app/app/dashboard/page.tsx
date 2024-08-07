@@ -8,11 +8,13 @@ import MoneySidebar from '../components/MoneySidebar';
 
 export default function Home() {
     return (
-        <div className="h-screen flex flex-col">
+        <div className="h-screen flex flex-col bg-custom-bg bg-cover bg-custom-right-bottom bg-fixed overflow-y-auto">
             <Header />
             <div className="grid grid-cols-5 flex-1">
                 <Sidebar />
-                <Service />
+                <div className="col-span-3">
+                    <Service />
+                </div>
                 <MoneySidebar />
             </div>
         </div>
