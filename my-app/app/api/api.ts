@@ -1,3 +1,4 @@
+/* ARCHIVED
 // トークンの取得
 const getToken = async (userid, password, projectname) => {
   try {
@@ -233,4 +234,4 @@ getToken(userid, password, projectname).then((token) => {
     console.log(data);
   });
 });
-
+*/
