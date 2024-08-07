@@ -20,25 +20,25 @@ export default function Header() {
             <Image src="/images/conoHa.png" alt="Logo" width={125} height={38} className="h-10" />
           </div>
           <nav className="flex space-x-8">
-            <Link href="/error/404" legacyBehavior>
+            <Link href="http://localhost:3000/not-found.tsx" legacyBehavior>
               <a className="text-gray-700 hover:text-blue-500 flex flex-col items-center space-y-0">
                 <MaterialSymbolsDataTableOutline />
                 <div className="text-xs">VPS</div>
               </a>
             </Link>
-            <Link href="/error/404" legacyBehavior>
+            <Link href="http://localhost:3000/not-found.tsx" legacyBehavior>
               <a className="text-gray-700 hover:text-blue-500 flex flex-col items-center space-y-0">
                 <CbiApcUpsUpright />
                 <div className="text-xs">WING</div>
               </a>
             </Link>
-            <Link href="/error/404" legacyBehavior>
+            <Link href="http://localhost:3000/not-found.tsx" legacyBehavior>
               <a className="text-gray-700 hover:text-blue-500 flex flex-col items-center space-y-0">
                 <GameIconsConsoleController />
                 <div className="text-xs">GAME</div>
               </a>
             </Link>
-            <Link href="/error/404" legacyBehavior>
+            <Link href="http://localhost:3000/not-found.tsx" legacyBehavior>
               <a className="text-gray-700 hover:text-blue-500 flex flex-col items-center space-y-0">
                 <IconParkOutlineBrain />
                 <div className="text-xs">AI</div>
@@ -47,19 +47,19 @@ export default function Header() {
           </nav>
         </div>
         <div className="flex items-center space-x-4">
-          <Link href="/error/404" legacyBehavior>
+          <Link href="http://localhost:3000/not-found.tsx" legacyBehavior>
             <a className="text-gray-700 hover:text-blue-500 flex items-center">
             <MaterialSymbolsCampaign />
             <div className="text-xs">お知らせ</div>
             </a>
           </Link>
-          <Link href="/error/404" legacyBehavior>
+          <Link href="http://localhost:3000/not-found.tsx" legacyBehavior>
             <a className="text-gray-700 hover:text-blue-500 flex items-center">
             <IconParkOutlineMail />
             <div className="text-xs">お問い合わせ</div>
             </a>
           </Link>
-          <Link href="/error/404" legacyBehavior>
+          <Link href="http://localhost:3000/not-found.tsx" legacyBehavior>
             <a className="text-gray-700 hover:text-blue-500 flex items-center">
             <MynauiQuestionCircle />
             <div className="text-xs">ヘルプ</div>
