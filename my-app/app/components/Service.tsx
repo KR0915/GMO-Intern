@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 
 interface ServiceItem {
@@ -7,7 +5,6 @@ interface ServiceItem {
   name: string;
 }
 
-// サービスのオプション
 const services: ServiceItem[] = [
   { icon: "☁️", name: "VPS" },
   { icon: "🖥️", name: "Windows Server" },
@@ -16,113 +13,64 @@ const services: ServiceItem[] = [
   { icon: "📊", name: "DBサーバー" },
 ];
 
-// 丸いボタンのオプション
 const roundButtonLabelsApplication = [
-  "かんたんKUSANAGI",
-  "Mattermost",
-  "Docker",
-  "LAMP(PHP)",
-  "Metabase",
+  "かんたんKUSANAGI", "Mattermost", "Docker", "LAMP(PHP)", "Metabase"
 ];
 const roundButtonLabelsOS = [
-  "CentOS",
-  "Ubuntu",
-  "Debian",
-  "Rocky Linux",
-  "AlmaLinux",
-  "Oracle Linux",
-  "MIRACLE LINUX",
-  "FreeBSD",
-  "Arch Linux",
-  "NetBSD",
-  "OpenBSD",
+  "CentOS", "Ubuntu", "Debian", "Rocky Linux", "AlmaLinux",
+  "Oracle Linux", "MIRACLE LINUX", "FreeBSD", "Arch Linux", "NetBSD", "OpenBSD"
 ];
 
-// 長方形ボタンのオプション
 const rectangleButtonLabels = [
-  "WordPress<br/>(KUSANAGI)",
-  "Dokku",
-  "Node.js",
-  "webmin",
-  "Prometheus",
-  "Cacti Nagios",
-  "Laravel",
-  "LEMP(PHP)",
-  "Mastodon",
-  "Misskey",
-  "Zabbix",
-  "Ruby on Rails",
-  "ownCloud",
-  "Nextcloud",
-  "GitLab",
-  "Redmine",
-  "Django",
-  "Concrete CMS",
-  "MediaWiki",
-  "Jenkins",
-  "Drupal",
-  "MIRACLE ZBX",
-  "Joomla",
-  "baserCMS",
-  "Matomo",
-  "ArchiveBox",
-  "Auto-GPT",
-  "BabyAGI UI",
-  "GPTEngineer",
-  "StableStudio",
+  "WordPress<br/>(KUSANAGI)", "Dokku", "Node.js", "webmin", "Prometheus",
+  "Cacti Nagios", "Laravel", "LEMP(PHP)", "Mastodon", "Misskey",
+  "Zabbix", "Ruby on Rails", "ownCloud", "Nextcloud", "GitLab",
+  "Redmine", "Django", "Concrete CMS", "MediaWiki", "Jenkins",
+  "Drupal", "MIRACLE ZBX", "Joomla", "baserCMS", "Matomo",
+  "ArchiveBox", "Auto-GPT", "BabyAGI UI", "GPTEngineer", "StableStudio"
 ];
 
-// イメージタイプのオプション
 const imageTypeOptions = [
-  "OS",
-  "アプリケーション",
-  "保存イメージ",
-  "自動バックアップ",
+  "OS", "アプリケーション", "保存イメージ", "自動バックアップ"
 ];
 
-// 料金タイプのオプション
 const pricingOptions = [
-  "時間課金",
-  "１ヶ月",
-  "３ヶ月",
-  "６ヶ月",
-  "１２ヶ月",
-  "２４ヶ月",
-  "３６ヶ月",
+  "時間課金", "１ヶ月", "３ヶ月", "６ヶ月", "１２ヶ月", "２４ヶ月", "３６ヶ月"
 ];
 
-// プランのオプション
 const planOptions = [
-  "512MB",
-  "1GB",
-  "2GB",
-  "4GB",
-  "8GB",
-  "16GB",
-  "32GB",
-  "64GB",
+  "512MB", "1GB", "2GB", "4GB", "8GB", "16GB", "32GB", "64GB"
 ];
 
-// サービスコンポーネント
+const pricingData: Record<string, number[]> = {
+  時間課金: [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
+  "１ヶ月": [459, 762, 1258, 2407, 4827, 9746, 22099, 44198],
+  "３ヶ月": [399, 666, 1055, 2189, 4389, 8144, 19939, 39884],
+  "６ヶ月": [347, 547, 892, 1712, 3431, 6610, 18491, 36989],
+  "１２ヶ月": [321, 508, 757, 1522, 3052, 6233, 16567, 33142],
+  "２４ヶ月": [310, 491, 689, 1393, 2713, 5993, 15667, 30142],
+  "３６ヶ月": [296, 468, 616, 1268, 2394, 5393, 13868, 28493]
+};
+
 const Services: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [selectedAppButton, setSelectedAppButton] = useState<string | null>(
-    null
-  );
-  const [selectedOSButton, setSelectedOSButton] = useState<string | null>(
-    null
-  );
+  const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
+  const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [rootPassword, setRootPassword] = useState("");
+  const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
-    setShowMore(false); // Reset "show more" when switching options
-    setSelectedAppButton(null); // Reset selected application button
-    setSelectedOSButton(null); // Reset selected OS button
-    setSelectedPricing(null); // Reset selected pricing
-    setSelectedPlan(null); // Reset selected plan
+    setShowMore(false);
+    setSelectedAppButton(null);
+    setSelectedOSButton(null);
+    setSelectedPricing(null);
+    setSelectedPlan(null);
+    setRootPassword("");
+    setNameTag("vps-2024-08-07-10-03");
   };
 
   const handleAppButtonClick = (label: string) => {
@@ -147,10 +95,8 @@ const Services: React.FC = () => {
 
   return (
     <div className="grid grid-cols-3 gap-4 p-4">
-      <h1 className="col-span-3 text-2xl font-bold text-center mb-4">
-        サービス
-      </h1>
-      {services.map((service) => (
+      <h1 className="col-span-3 text-2xl font-bold text-center mb-4">サービス</h1>
+      {services.map(service => (
         <button
           key={service.name}
           className="bg-white border border-black shadow-md rounded-lg p-4 flex flex-col items-center text-center"
@@ -160,25 +106,50 @@ const Services: React.FC = () => {
           <div className="p-2">{service.icon}</div>
         </button>
       ))}
-      <div className="col-span-3 h-8"></div> {/* 空白行 */}
+      <div className="col-span-3 h-8"></div>
       <div className="col-span-3 flex justify-center items-center mb-4">
         <h1 className="text-2xl font-bold text-center mr-4">イメージタイプ</h1>
-        <div>
-          {imageTypeOptions.map((option) => (
-            <button
-              key={option}
-              onClick={() => handleOptionClick(option)}
-              className={`rounded px-4 py-2 mx-2 ${
-                selectedOption === option
-                  ? "bg-blue-600 text-white"
-                  : "bg-blue-500 text-white"
-              }`}
-            >
-              {option}
-            </button>
-          ))}
+        {imageTypeOptions.map(option => (
+          <button
+            key={option}
+            onClick={() => handleOptionClick(option)}
+            className={`rounded px-4 py-2 mx-2 ${
+              selectedOption === option
+                ? "bg-blue-600 text-white"
+                : "bg-blue-500 text-white"
+            }`}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+
+      {/* Rootパスワードとネームタグの入力欄 */}
+      <div className="col-span-3">
+        <div className="flex flex-col items-center mb-4">
+          <label htmlFor="rootPassword">Rootパスワード:</label>
+          <input
+            type="password"
+            id="rootPassword"
+            value={rootPassword}
+            onChange={e => setRootPassword(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded"
+          />
+        </div>
+        <div className="flex flex-col items-center mb-4">
+          <label htmlFor="nameTag">ネームタグ:</label>
+          <input
+            type="text"
+            id="nameTag"
+            value={nameTag}
+            onChange={e => setNameTag(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded"
+          />
         </div>
       </div>
+
+
+      {/* 選択されたオプションが「アプリケーション」の場合 */}
       {selectedOption === "アプリケーション" && (
         <>
           <div className="col-span-3 flex justify-center items-center mb-4 gap-4">
@@ -196,6 +167,7 @@ const Services: React.FC = () => {
               </button>
             ))}
           </div>
+
           {showMore && (
             <div className="col-span-3 grid grid-cols-5 gap-4 mb-4">
               {rectangleButtonLabels.map((label, index) => (
@@ -207,11 +179,12 @@ const Services: React.FC = () => {
                       ? "bg-blue-400 text-white"
                       : "bg-white text-black"
                   }`}
-                  dangerouslySetInnerHTML={{ __html: label }} // HTMLを直接レンダリング
+                  dangerouslySetInnerHTML={{ __html: label }}
                 />
               ))}
             </div>
           )}
+
           <div className="col-span-3 flex justify-center">
             <button
               onClick={toggleShowMore}
@@ -220,6 +193,7 @@ const Services: React.FC = () => {
               {showMore ? "少なく見る" : "もっと見る"}
             </button>
           </div>
+
           <div className="col-span-3 flex flex-col items-center mt-4">
             <h2 className="text-xl font-bold mb-2">料金タイプ</h2>
             <div className="flex gap-4">
@@ -238,6 +212,7 @@ const Services: React.FC = () => {
               ))}
             </div>
           </div>
+
           <div className="col-span-3 flex flex-col items-center mt-4">
             <h2 className="text-xl font-bold mb-2">プラン</h2>
             <div className="flex gap-4 flex-wrap justify-center">
@@ -251,29 +226,71 @@ const Services: React.FC = () => {
                       : "bg-white border border-black text-black"
                   }`}
                 >
-                  {option}
+                  {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
                 </button>
               ))}
             </div>
           </div>
         </>
       )}
+
+      {/* 選択されたオプションが「OS」の場合 */}
       {selectedOption === "OS" && (
-        <div className="col-span-3 flex flex-wrap justify-center items-center mb-4 gap-4">
-          {roundButtonLabelsOS.map((label, index) => (
-            <button
-              key={index}
-              onClick={() => handleOSButtonClick(label)}
-              className={`h-24 w-36 rounded-full border border-black text-center px-4 py-2 leading-tight ${
-                selectedOSButton === label
-                  ? "bg-blue-400 text-white"
-                  : "bg-white text-black"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <>
+          <div className="col-span-3 flex flex-wrap justify-center items-center mb-4 gap-4">
+            {roundButtonLabelsOS.map((label, index) => (
+              <button
+                key={index}
+                onClick={() => handleOSButtonClick(label)}
+                className={`h-24 w-36 rounded-full border border-black text-center px-4 py-2 leading-tight ${
+                  selectedOSButton === label
+                    ? "bg-blue-400 text-white"
+                    : "bg-white text-black"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div className="col-span-3 flex flex-col items-center mt-4">
+            <h2 className="text-xl font-bold mb-2">料金タイプ</h2>
+            <div className="flex gap-4">
+              {pricingOptions.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePricingClick(option)}
+                  className={`rounded px-4 py-2 ${
+                    selectedPricing === option
+                      ? "bg-blue-400 text-white"
+                      : "bg-white border border-black text-black"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="col-span-3 flex flex-col items-center mt-4">
+            <h2 className="text-xl font-bold mb-2">プラン</h2>
+            <div className="flex gap-4 flex-wrap justify-center">
+              {planOptions.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePlanClick(option)}
+                  className={`rounded px-4 py-2 ${
+                    selectedPlan === option
+                      ? "bg-blue-400 text-white"
+                      : "bg-white border border-black text-black"
+                  }`}
+                >
+                  {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

@@ -1,13 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 
-// メニューアイテムの型を定義
 interface MenuItem {
   icon: string;
   label: string;
 }
 
-// メニューアイテムのリストを作成
+// メニューアイテムのオプションを作成
 const menuItems: MenuItem[] = [
   { icon: '➕', label: 'サーバー追加' },
   { icon: '💻', label: 'サーバー' },
@@ -25,11 +24,10 @@ const menuItems: MenuItem[] = [
   { icon: '🎚️', label: 'バージョン切り替え' },
 ];
 
-// サイドバーコンポーネントを定義
+// サイドバーコンポーネントを定義（サーバー追加だけ色を変える）
 const Sidebar: React.FC = () => {
   return (
     <div className="w-64 min-h-screen bg-white text-blue-400 flex flex-col">
-      {/* メニューリスト */}
       <ul className="flex-1 p-4 space-y-2">
         {menuItems.map((item, index) => (
           <Link href="/error/404" key={index} legacyBehavior>
