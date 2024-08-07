@@ -23,7 +23,8 @@ export default function Auth() {
               password,
           });
           if (error) throw error;
-
+          //   alert("ログインに成功しました!");
+          localStorage.setItem("userEmail", email); // EmailをlocalStorageに保存
           // ログイン成功時にユーザー情報をDBに保存（存在しない場合）
           if (data.user) {
               await saveUserToDB(data.user);
