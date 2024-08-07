@@ -4,6 +4,10 @@ import { MdiMicrosoftWindows } from "./icon/WindowServer";
 import { BiGpuCard } from "./icon/GPUServer";
 import { PhEnvelopeSimple } from "./icon/MailServer";
 import { MdiDatabase } from "./icon/DBServer";
+import { IcSharpPhp } from "./icon/Php";
+import { LogosDockerIcon } from "./icon/Docker";
+import { MdiApplicationBracesOutline } from "./icon/CodeEditar";
+import { Fa6BrandsWordpress } from "./icon/WordPress";
 
 
 interface ServiceItem {
@@ -20,7 +24,11 @@ const services: ServiceItem[] = [
 ];
 
 const display_rectangleButtonLabels = [
-  "かんたんKUSANAGI", "Mattermost", "Docker", "LAMP(PHP)", "Metabase"
+  { label: "かんたんKUSANAGI", icon: <Fa6BrandsWordpress /> },
+  { label: "Mattermost", icon: <MdiApplicationBracesOutline /> },
+  { label: "Docker", icon: <LogosDockerIcon /> },
+  { label: "LAMP(PHP)", icon: <IcSharpPhp /> },
+  { label: "Metabase", icon: <MdiApplicationBracesOutline /> },
 ];
 
 const roundButtonLabelsOS = [
@@ -136,17 +144,20 @@ export default function Services () {
     {selectedOption === "アプリケーション" && (
       <div>
         <div className="grid grid-cols-3 gap-2">
-          {display_rectangleButtonLabels.map((label, index) => (
+          {display_rectangleButtonLabels.map((item, index) => (
             <button
               key={index}
-              onClick={() => handleAppButtonClick(label)}
+              onClick={() => handleAppButtonClick(item.label)}
               className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tight ${
-                selectedAppButton === label
+                selectedAppButton === item.label
                   ? "bg-blue-400 text-white"
                   : "bg-white text-black"
               }`}
             >
-              {label}
+            <div className="flex items-center justify-center">
+              {item.icon}
+              <span className="ml-2 items-center justify-center">{item.label}</span>
+            </div>
             </button>
           ))}
         </div>
