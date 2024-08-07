@@ -97,204 +97,205 @@ export default function Services () {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4 p-4">
-      <h1 className="col-span-3 text-2xl font-bold text-center mb-4">サービス</h1>
-      {services.map(service => (
-        <button
-          key={service.name}
-          className="bg-white border border-black shadow-md rounded-lg p-4 flex flex-col items-center text-center"
-        >
-          <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
-          <hr className="w-full mb-2" />
-          <div className="p-2">{service.icon}</div>
-        </button>
-      ))}
-      <div className="col-span-3 h-8"></div>
-      <div className="col-span-3 flex justify-center items-center mb-4">
-        <h1 className="text-2xl font-bold text-center mr-4">イメージタイプ</h1>
-        {imageTypeOptions.map(option => (
+    <div className="h-screen overflow-y-auto">
+      <div className="grid grid-cols-3 gap-4 p-4">
+        <h1 className="col-span-3 text-2xl font-bold text-center mb-4">サービス</h1>
+        {services.map(service => (
           <button
-            key={option}
-            onClick={() => handleOptionClick(option)}
-            className={`rounded px-4 py-2 mx-2 ${
-              selectedOption === option
-                ? "bg-blue-600 text-white"
-                : "bg-blue-500 text-white"
-            }`}
+            key={service.name}
+            className="bg-white border border-black shadow-md rounded-lg p-4 flex flex-col items-center text-center"
           >
-            {option}
+            <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
+            <hr className="w-full mb-2" />
+            <div className="p-2">{service.icon}</div>
           </button>
         ))}
-      </div>
-
-      {/* Rootパスワードとネームタグの入力欄 */}
-      <div className="col-span-3">
-        <div className="flex flex-col items-center mb-4">
-          <label htmlFor="rootPassword">Rootパスワード:</label>
-          <input
-            type="password"
-            id="rootPassword"
-            value={rootPassword}
-            onChange={e => setRootPassword(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded"
-          />
+        <div className="col-span-3 h-8"></div>
+        <div className="col-span-3 flex justify-center items-center mb-4">
+          <h1 className="text-2xl font-bold text-center mr-4">イメージタイプ</h1>
+          {imageTypeOptions.map(option => (
+            <button
+              key={option}
+              onClick={() => handleOptionClick(option)}
+              className={`rounded px-4 py-2 mx-2 ${
+                selectedOption === option
+                  ? "bg-blue-600 text-white"
+                  : "bg-blue-500 text-white"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
         </div>
-        <div className="flex flex-col items-center mb-4">
-          <label htmlFor="nameTag">ネームタグ:</label>
-          <input
-            type="text"
-            id="nameTag"
-            value={nameTag}
-            onChange={e => setNameTag(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded"
-          />
-        </div>
-      </div>
 
-
-      {/* 選択されたオプションが「アプリケーション」の場合 */}
-      {selectedOption === "アプリケーション" && (
-        <>
-          <div className="col-span-3 flex justify-center items-center mb-4 gap-4">
-            {display_rectangleButtonLabels.map((label, index) => (
-              <button
-                key={index}
-                onClick={() => handleAppButtonClick(label)}
-                className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tightt ${
-                  selectedAppButton === label
-                    ? "bg-blue-400 text-white"
-                    : "bg-white text-black"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          {showMore && (
-            <div className="col-span-3 grid grid-cols-5 gap-4 mb-4">
-              {storage_rectangleButtonLabels.map((label, index) => (
+        {/* 選択されたオプションが「アプリケーション」の場合 */}
+        {selectedOption === "アプリケーション" && (
+          <>
+            <div className="col-span-3 flex justify-center items-center mb-4 gap-4">
+              {display_rectangleButtonLabels.map((label, index) => (
                 <button
                   key={index}
                   onClick={() => handleAppButtonClick(label)}
-                  className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tight ${
+                  className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tightt ${
                     selectedAppButton === label
                       ? "bg-blue-400 text-white"
                       : "bg-white text-black"
                   }`}
-                  dangerouslySetInnerHTML={{ __html: label }}
-                />
-              ))}
-            </div>
-          )}
-
-          <div className="col-span-3 flex justify-center">
-            <button
-              onClick={toggleShowMore}
-              className="bg-gray-500 text-white rounded px-4 py-2 mt-4"
-            >
-              { showMore ? "閉じる" : "他のアプリケーションを表示する" }
-            </button>
-          </div>
-
-          <div className="col-span-3 flex flex-col items-center mt-4">
-            <h2 className="text-xl font-bold mb-2">料金タイプ</h2>
-            <div className="flex gap-4">
-              {pricingOptions.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePricingClick(option)}
-                  className={`rounded px-4 py-2 ${
-                    selectedPricing === option
-                      ? "bg-blue-400 text-white"
-                      : "bg-white border border-black text-black"
-                  }`}
                 >
-                  {option}
+                  {label}
                 </button>
               ))}
             </div>
-          </div>
 
-          <div className="col-span-3 flex flex-col items-center mt-4">
-            <h2 className="text-xl font-bold mb-2">プラン</h2>
-            <div className="flex gap-4 flex-wrap justify-center">
-              {planOptions.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePlanClick(option)}
-                  className={`rounded px-4 py-2 ${
-                    selectedPlan === option
-                      ? "bg-blue-400 text-white"
-                      : "bg-white border border-black text-black"
-                  }`}
-                >
-                  {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
-                </button>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
+            {showMore && (
+              <div className="col-span-3 grid grid-cols-5 gap-4 mb-4">
+                {storage_rectangleButtonLabels.map((label, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAppButtonClick(label)}
+                    className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tight ${
+                      selectedAppButton === label
+                        ? "bg-blue-400 text-white"
+                        : "bg-white text-black"
+                    }`}
+                    dangerouslySetInnerHTML={{ __html: label }}
+                  />
+                ))}
+              </div>
+            )}
 
-      {/* 選択されたオプションが「OS」の場合 */}
-      {selectedOption === "OS" && (
-        <>
-          <div className="col-span-3 flex flex-wrap justify-center items-center mb-4 gap-4">
-            {roundButtonLabelsOS.map((label, index) => (
+            <div className="col-span-3 flex justify-center">
               <button
-                key={index}
-                onClick={() => handleOSButtonClick(label)}
-                className={`h-24 w-36 rounded-full border border-black text-center px-4 py-2 leading-tight ${
-                  selectedOSButton === label
-                    ? "bg-blue-400 text-white"
-                    : "bg-white text-black"
-                }`}
+                onClick={toggleShowMore}
+                className="bg-gray-500 text-white rounded px-4 py-2 mt-4"
               >
-                {label}
+                { showMore ? "閉じる" : "他のアプリケーションを表示する" }
               </button>
-            ))}
-          </div>
+            </div>
 
-          <div className="col-span-3 flex flex-col items-center mt-4">
-            <h2 className="text-xl font-bold mb-2">料金タイプ</h2>
-            <div className="flex gap-4">
-              {pricingOptions.map((option, index) => (
+            <div className="col-span-3 flex flex-col items-center mt-4">
+              <h2 className="text-xl font-bold mb-2">料金タイプ</h2>
+              <div className="flex gap-4">
+                {pricingOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePricingClick(option)}
+                    className={`rounded px-4 py-2 ${
+                      selectedPricing === option
+                        ? "bg-blue-400 text-white"
+                        : "bg-white border border-black text-black"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="col-span-3 flex flex-col items-center mt-4">
+              <h2 className="text-xl font-bold mb-2">プラン</h2>
+              <div className="flex gap-4 flex-wrap justify-center">
+                {planOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePlanClick(option)}
+                    className={`rounded px-4 py-2 ${
+                      selectedPlan === option
+                        ? "bg-blue-400 text-white"
+                        : "bg-white border border-black text-black"
+                    }`}
+                  >
+                    {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* 選択されたオプションが「OS」の場合 */}
+        {selectedOption === "OS" && (
+          <>
+            <div className="col-span-3 flex flex-wrap justify-center items-center mb-4 gap-4">
+              {roundButtonLabelsOS.map((label, index) => (
                 <button
                   key={index}
-                  onClick={() => handlePricingClick(option)}
-                  className={`rounded px-4 py-2 ${
-                    selectedPricing === option
+                  onClick={() => handleOSButtonClick(label)}
+                  className={`h-24 w-36 rounded-full border border-black text-center px-4 py-2 leading-tight ${
+                    selectedOSButton === label
                       ? "bg-blue-400 text-white"
-                      : "bg-white border border-black text-black"
+                      : "bg-white text-black"
                   }`}
                 >
-                  {option}
+                  {label}
                 </button>
               ))}
             </div>
-          </div>
 
-          <div className="col-span-3 flex flex-col items-center mt-4">
-            <h2 className="text-xl font-bold mb-2">プラン</h2>
-            <div className="flex gap-4 flex-wrap justify-center">
-              {planOptions.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePlanClick(option)}
-                  className={`rounded px-4 py-2 ${
-                    selectedPlan === option
-                      ? "bg-blue-400 text-white"
-                      : "bg-white border border-black text-black"
-                  }`}
-                >
-                  {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
-                </button>
-              ))}
+            <div className="col-span-3 flex flex-col items-center mt-4">
+              <h2 className="text-xl font-bold mb-2">料金タイプ</h2>
+              <div className="flex gap-4">
+                {pricingOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePricingClick(option)}
+                    className={`rounded px-4 py-2 ${
+                      selectedPricing === option
+                        ? "bg-blue-400 text-white"
+                        : "bg-white border border-black text-black"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            <div className="col-span-3 flex flex-col items-center mt-4">
+              <h2 className="text-xl font-bold mb-2">プラン</h2>
+              <div className="flex gap-4 flex-wrap justify-center">
+                {planOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePlanClick(option)}
+                    className={`rounded px-4 py-2 ${
+                      selectedPlan === option
+                        ? "bg-blue-400 text-white"
+                        : "bg-white border border-black text-black"
+                    }`}
+                  >
+                    {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Rootパスワードとネームタグの入力欄 */}
+      <div className="col-span-3">
+          <div className="flex flex-col items-center mb-4">
+            <label htmlFor="rootPassword">Rootパスワード:</label>
+            <input
+              type="password"
+              id="rootPassword"
+              value={rootPassword}
+              onChange={e => setRootPassword(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded"
+            />
           </div>
-        </>
-      )}
+          <div className="flex flex-col items-center mb-4">
+            <label htmlFor="nameTag">ネームタグ:</label>
+            <input
+              type="text"
+              id="nameTag"
+              value={nameTag}
+              onChange={e => setNameTag(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded"
+            />
+          </div>
+      </div>
     </div>
   );
 };
