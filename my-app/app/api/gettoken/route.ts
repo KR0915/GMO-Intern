@@ -1,14 +1,30 @@
 // トークンの取得
+
+import {supabase} from '@/utils/supabase';
+
 export async function GET(request: Request) {
-  console.log("hello")
   try {
     const { searchParams } = new URL(request.url);
-    /* DEBUG */
-    const userid = process.env.USERID;
-    const password = process.env.PASSWORD;
-    const projectname = process.env.PROJECTNAME;
-
     const user = searchParams.get("user");
+    var userid;
+    var password;
+    var projectname;
+    try{ // Supabase
+      const {data, error} = await supabase
+        .from('users')
+        .select('user_id, password, project_name')
+        .eq('id', user)
+      if(error) {
+        console.error('Error fetching data: ', error);
+      }else{
+        userid = data[0].user_id;
+        password = data[0].password;
+        projectname = data[0].project_name;
+      }
+    }catch(error){
+      console.error('Unexpected error: ', error);
+    }
+    
     const endpoint = "https://identity.c3j1.conoha.io/v3/auth/tokens"; // APIのエンドポイント
     const response = await fetch(endpoint, {
       method: "POST",
