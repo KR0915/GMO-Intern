@@ -4,17 +4,17 @@ import React from 'react';
 import Service from '../components/Service';  // Serviceコンポーネントをインポート
 import Header from '../components/Header'; // Headerコンポーネントをインポート
 import Sidebar from '../components/Sidebar'; // Sidebarコンポーネントをインポート
+import MoneySidebar from '../components/MoneySidebar';
 
 export default function Home() {
     return (
-        <div>
+        <div className="h-screen flex flex-col">
             <Header />
-            <div className="flex">
+            <div className="grid grid-cols-5 flex-1">
                 <Sidebar />
-            <main className="flex-1">
                 <Service />
-            </main>
+                <MoneySidebar />
             </div>
-    </div>
+        </div>
     );
 }

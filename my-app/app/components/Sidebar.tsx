@@ -26,44 +26,24 @@ const menuItems: MenuItem[] = [
 ];
 
 // サイドバーコンポーネントを定義（サーバー追加だけ色を変える）
-const Sidebar: React.FC = () => {
-  const [expanded, setExpanded] = useState<string | null>(null);
-
-  const toggleSubMenu = (label: string) => {
-    setExpanded(expanded === label ? null : label);
-  };
-
+export default function Sidebar() {
   return (
-    <div className="w-64 min-h-screen bg-white text-blue-400 flex flex-col">
-      <ul className="flex-1 p-4 space-y-2">
+    <div className="col-span-1 bg-gray-100 p-4">
+      <div className="flex flex-col space-y-2">
         {menuItems.map((item, index) => (
-          <>
             <Link href="/error/404" key={index} legacyBehavior>
               <a>
                 <li
                   className={`flex items-center p-3 rounded transition-colors cursor-pointer 
                     ${item.label === 'サーバー追加' ? 'bg-blue-400 text-white' : 'hover:bg-gray-100'}`}
-                  onClick={() => item.subItems && toggleSubMenu(item.label)}
                 >
                   <span className="mr-3 text-xl">{item.icon}</span>
                   <span className="text-lg">{item.label}</span>
                 </li>
               </a>
             </Link>
-            {item.label === expanded && item.subItems && (
-              <ul className="pl-10">
-                {item.subItems.map((sub, subIndex) => (
-                  <li key={subIndex} className="text-sm text-gray-700 py-1">
-                    {sub}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </>
-        ))}
-      </ul>
+          ))}
+      </div>
     </div>
   );
 };
-
-export default Sidebar;
