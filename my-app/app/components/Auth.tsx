@@ -24,6 +24,7 @@ export default function Auth() {
           });
           if (error) throw error;
           //   alert("ログインに成功しました!");
+          localStorage.setItem("userEmail", email); // EmailをlocalStorageに保存
           router.push("/dashboard");
         } catch (error) {
           alert((error as any).message);
