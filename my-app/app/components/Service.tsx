@@ -11,7 +11,6 @@ import { LogosDockerIcon } from "./icon/Docker";
 import { MdiApplicationBracesOutline } from "./icon/CodeEditar";
 import { Fa6BrandsWordpress } from "./icon/WordPress";
 import Option from "./option";
-import { useEffect } from "react";
 import RunScript from "./RunScript";
 
 interface ServiceItem {
