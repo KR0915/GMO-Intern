@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
 import { MdiMicrosoftWindows } from "./icon/WindowServer";
@@ -9,6 +11,7 @@ import { LogosDockerIcon } from "./icon/Docker";
 import { MdiApplicationBracesOutline } from "./icon/CodeEditar";
 import { Fa6BrandsWordpress } from "./icon/WordPress";
 import Option from "./option";
+import { useEffect } from "react";
 
 interface ServiceItem {
   icon: React.ReactNode;
@@ -85,11 +88,11 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null); // 新しい状態を追加
   const [rootPassword, setRootPassword] = useState("");
-  const [nameTag, setNameTag] = useState("vps-" + date.getFullYear() + "-" + ("0"+(date.getMonth() + 1)).slice(-2) + "-" + ("0"+(date.getDate())).slice(-2) + "-" + date.getHours() + "-" + ("0"+(date.getMinutes())).slice(-2));
+  const [nameTag, setNameTag] = useState<string>("");
   const [showMore, setShowMore] = useState(false);
 
   const pricingData: Record<string, number[]> = {
-    時間課金: [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
+    "時間課金": [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
     "１ヶ月": [459, 762, 1258, 2407, 4827, 9746, 22099, 44198],
     "３ヶ月": [399, 666, 1055, 2189, 4389, 8144, 19939, 39884],
     "６ヶ月": [347, 547, 892, 1712, 3431, 6610, 18491, 36989],
@@ -97,6 +100,22 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
     "２４ヶ月": [310, 491, 689, 1393, 2713, 5993, 15667, 30142],
     "３６ヶ月": [296, 468, 616, 1268, 2394, 5393, 13868, 28493]
   };
+
+  useEffect(() => {
+    const date = new Date();
+    setNameTag(
+      "vps-" +
+      date.getFullYear() +
+      "-" +
+      ("0" + (date.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + date.getDate()).slice(-2) +
+      "-" +
+      date.getHours() +
+      "-" +
+      ("0" + date.getMinutes()).slice(-2)
+    );
+  }, []);
 
   const handleServiceClick = (serviceName: string) => {
     setSelectedService(serviceName);
@@ -112,7 +131,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
     setSelectedPlan(null);
     setSelectedPrice(null);
     setRootPassword("");
-    setNameTag("");
   };
 
   const handleAppButtonClick = (label: string) => {
