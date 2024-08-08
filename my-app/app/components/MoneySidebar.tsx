@@ -1,22 +1,26 @@
-// MoneySidebar.tsx
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { selectedPlanState, selectedPriceState, selectedAppState, selectedServiceState } from '../recoil/atoms';
+import { selectedPlanState, selectedPriceState, selectedAppState } from '../recoil/atoms';
 
 export default function MoneySidebar() {
   const selectedPlan = useRecoilValue(selectedPlanState);
   const selectedPrice = useRecoilValue(selectedPriceState);
   const selectedApp = useRecoilValue(selectedAppState);
-  const selectedService = useRecoilValue(selectedServiceState);
+
+  const [size, setSize] = useState(100);
+  const [flavorRef, setFlavorRef] = useState("");
+  const [imageRef, setImageRef] = useState("");
+  const [volumeName, setVolumeName] = useState("volume-name");
+  const [serverName, setServerName] = useState("server-name");
+  const [securityGroups, setSecurityGroups] = useState("IPv4v6-SSH");
 
   const volumeDescription = null;
   const user = "USER";
 
   async function create() {
     console.log("create関数が呼ばれました");
-    console.log("選択されたサービス:", selectedService);
     console.log("選択されたプラン:", selectedPlan);
     console.log("選択された価格:", selectedPrice);
     console.log("選択されたアプリケーション:", selectedApp);
@@ -26,15 +30,15 @@ export default function MoneySidebar() {
       `/api/getimageid?user=${user}&target=${selectedApp}`
     );
     const imageJson = await imageGet.json();
-    const imageRef = imageJson as string;
+    setImageRef(imageJson as string);
 
     // ボリュームの確保
     const volGetID = await fetch(`/api/getvolumeid?user=${user}`, {
       method: "POST",
       body: JSON.stringify({
-        size: selectedPlan ? parseInt(selectedPlan.size, 10) : 100, 
+        size: size,
         description: volumeDescription,
-        name: selectedService, // サービス名を使用
+        name: volumeName,
         imageRef: imageRef,
         volume_type: "c3j1-ds02-boot",
       }),
@@ -58,10 +62,12 @@ export default function MoneySidebar() {
 
     // フレーバーの取得
     const flavorGet = await fetch(
-      `/api/getflavorid?user=${user}&flavor=${selectedPlan?.size}`
+      `/api/getflavorid?user=${user}&flavor=${selectedPlan}`
     );
     const flavorJson = await flavorGet.json();
     const flavorRef = flavorJson as string;
+
+    setFlavorRef(flavorRef);
 
     // 作成
     const APIcreate = await fetch(`/api/create?user=${user}`, {
@@ -69,8 +75,8 @@ export default function MoneySidebar() {
       body: JSON.stringify({
         flavorRef,
         volume_id,
-        name_tag: selectedService, // サービス名を使用
-        security_groups: "default",
+        name_tag: serverName,
+        security_groups: securityGroups,
         selectedApp,
       }),
     });
@@ -79,35 +85,15 @@ export default function MoneySidebar() {
     console.log("作成結果:", JSON.stringify(createdJson));
   }
 
-
   return (
-    <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4 bg-opacity-80">
+    <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4">
       <div className="mt-4">
-        <div className='flex justify-between'>
-          <p className=''>サービス:</p>
-          <p className=''>{selectedService || '未選択'}</p>
-        </div>
-        <div className='flex justify-between'>
-          <p className=''>メモリ:</p>
-          <p className=''>{selectedPlan ? selectedPlan.size : '未選択'}</p>
-        </div>
-        <div className='flex justify-between'>
-          <p className=''>CPU:</p>
-          <p className=''>{selectedPlan ? selectedPlan.cpu : '未選択'}</p>
-        </div>
-        <div className='flex justify-between'>
-          <p className=''>SSD:</p>
-          <p className=''>{selectedPlan ? selectedPlan.ssd : '未選択'}</p>
-        </div>
-        <div className='flex justify-between'>
-          <p className=''>価格:</p>
-          <p>{selectedPrice ? `${selectedPrice.toLocaleString()} 円 /月` : '未選択'}</p>
-        </div>
-        <div className='border-b-2 border-gray-300'></div>
+        <p>選択されたプラン: {selectedPlan || '未選択'}</p>
+        <p>価格: {selectedPrice ? `${selectedPrice.toLocaleString()} 円 /月` : '未選択'}</p>
         <div className="flex justify-center items-center mt-4">
           <button
             onClick={() => {
-              console.log("追加ボタンがクリックされました"); // 追加ボタンがクリックされたことをコンソールに出力
+              console.log("追加ボタンがクリックされました");
               create();
             }}
             className="bg-blue-500 text-white py-2 px-4 rounded"
