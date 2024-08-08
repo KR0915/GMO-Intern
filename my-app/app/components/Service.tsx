@@ -158,9 +158,9 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
               <button
                 key={service.name}
                 onClick={() => handleServiceClick(service.name)}
-                className={`bg-white border border-black shadow-md rounded-lg p-2 flex flex-col items-center text-center h-24 w-48 ${
+                className={`border border-black shadow-md rounded-lg p-2 flex flex-col items-center text-center h-24 w-48 ${
                   selectedService === service.name 
-                  ? "bg-blue-400 text-white" 
+                  ? "bg-blue-400 text-white border-blue-400" 
                   : "bg-white text-black hover:border-blue-400 hover:text-blue-400"
                 }`}
               >
