@@ -25,7 +25,7 @@ export async function GET(request: Request) {
       console.error('Unexpected error: ', error);
     }
 
-    token = process.env.TOKEN as string;
+    token = process.env.NEXT_PUBLIC_TOKEN as string;
 
     const endpoint = "https://compute.c3j1.conoha.io/v2.1/flavors";
     const response = await fetch(endpoint, {
