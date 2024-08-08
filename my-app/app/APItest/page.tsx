@@ -3,26 +3,46 @@
 import { useState } from "react";
 
 export default function Page() {
-  const [token, setToken] = useState("");
+  const [size, setSize] = useState(100);
+  const [flavor, setFlavor] = useState("flavor1GB");
+  const [flavorRef, setFlavorRef] = useState("");
+  const [image, setImage] = useState("Docker");
+  const [imageRef, setImageRef] = useState("");
+  const [volumeName, setVolumeName] = useState("volume-name");
+  const [ServerName, setServerName] = useState("server-name");
+  const [security_groups, setSecurityGroups] = useState("IPv4v6-SSH");
 
-  const size = 100; // 容量
-  const flavorRef = "f2a77529-1815-43a2-bc14-1f3f6b09079c"; // FlavorID
-  const imageRef = "30139c65-2650-47df-8c8f-23feb5287a48";
-  const name_tag = "test-vps"; // 名前
-  const security_groups = "IPv4v6-SSH"; //セキュリティグループ
+  const handleSetSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSize(Number(event.target.value));
+  };
+  const handleSetFlavor = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFlavor(event.target.value);
+  };
+  const handleSetImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImage(event.target.value);
+  };
+  const handleSetVolumeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVolumeName(event.target.value);
+  };
+  const handleSetServerName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setServerName(event.target.value);
+  };
+  const handleSetSecurityGroups = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSecurityGroups(event.target.value);
+  };
+
   const volumeDescription = null;
-  const volumeName = "my-name";
-
-  async function getToken() {
-    const res = await fetch(
-      "/api/gettoken?user=d4b10aeb-7f1e-4e21-96c4-528a5afacd5b"
-    );
-    const token = await res.json();
-    setToken(token);
-  }
+  const user = "USER";
 
   async function create() {
-    const user = "USER";
+    // イメージの取得
+    const imageGet = await fetch(
+      `/api/getimageid?user=${user}&target=${image}`
+    );
+    const imageJson = await imageGet.json();
+    setImageRef(imageJson as string);
 
     // ボリュームの確保
     const volGetID = await fetch(`/api/getvolumeid?user=${user}`, {
@@ -35,7 +55,6 @@ export default function Page() {
         volume_type: "c3j1-ds02-boot",
       }),
     });
-
     const volIDJson = await volGetID.json();
     var volume_id = volIDJson.volume?.id as string;
     console.log(volume_id);
@@ -53,13 +72,22 @@ export default function Page() {
       }
     }
 
+    // フレーバーの取得
+    const flavorGet = await fetch(
+      `/api/getflavorid?user=${user}&flavor=${flavor}`
+    );
+    const flavorJson = await flavorGet.json();
+    const flavorRef = flavorJson as string;
+
+    setFlavorRef(flavorRef);
+
     // 作成
     const APIcreate = await fetch(`/api/create?user=${user}`, {
       method: "POST",
       body: JSON.stringify({
         flavorRef,
         volume_id,
-        name_tag,
+        name_tag: ServerName,
         security_groups,
       }),
     });
@@ -69,12 +97,79 @@ export default function Page() {
   }
 
   return (
-    <div className="text-center mt-8">
+    <div className="text-left mt-8">
       <div>
-        <button className="p-2" onClick={create}>
+        <p>
+          Size:{" "}
+          <input
+            type="number"
+            value={size}
+            onChange={handleSetSize}
+            placeholder="Volume size"
+          />
+        </p>
+      </div>
+      <div>
+        <p>
+          Image:{" "}
+          <input
+            type="text"
+            value={size}
+            onChange={handleSetImage}
+            placeholder="Image"
+          />
+        </p>
+        <p>imageID: {imageRef}</p>
+      </div>
+      <div>
+        <p>
+          Flavor:{" "}
+          <input
+            type="text"
+            value={flavor}
+            onChange={handleSetFlavor}
+            placeholder="Memory size"
+          />
+        </p>
+        <p>flavorID: {flavorRef}</p>
+      </div>{" "}
+      <div>
+        <p>
+          VolumeName:{" "}
+          <input
+            type="text"
+            value={volumeName}
+            onChange={handleSetVolumeName}
+            placeholder="Volume name"
+          />
+        </p>
+      </div>
+      <div>
+        <p>
+          ServerName:{" "}
+          <input
+            type="text"
+            value={ServerName}
+            onChange={handleSetServerName}
+            placeholder="Server name"
+          />
+        </p>
+      </div>
+      <div>
+        <p>
+          SecurityGroup:{" "}
+          <input
+            type="text"
+            value={security_groups}
+            onChange={handleSetSecurityGroups}
+            placeholder="Security group"
+          />
+        </p>
+      </div>
+      <div>
+        <button className="p-2" onClick={() => create()}>
           Create!
         </button>
-        <p>{token}</p>
       </div>
     </div>
   );
