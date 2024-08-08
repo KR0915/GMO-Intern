@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useCallback } from 'react';
 import Service from '../components/Service';  // Serviceコンポーネントをインポート
 import Header from '../components/Header'; // Headerコンポーネントをインポート
@@ -45,6 +44,5 @@ export default function Home() {
                 </div>
             </div>
         </div>
-
-  );
+    );
 }
