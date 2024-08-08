@@ -8,6 +8,7 @@ import { IcSharpPhp } from "./icon/Php";
 import { LogosDockerIcon } from "./icon/Docker";
 import { MdiApplicationBracesOutline } from "./icon/CodeEditar";
 import { Fa6BrandsWordpress } from "./icon/WordPress";
+import Option from "./option";
 
 interface ServiceItem {
   icon: React.ReactNode;
@@ -362,6 +363,9 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
                 onChange={e => setNameTag(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded"
               />
+            </div>
+            <div>
+              <Option />
             </div>
           </div>
         </div>
