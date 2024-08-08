@@ -12,6 +12,7 @@ import { MdiApplicationBracesOutline } from "./icon/CodeEditar";
 import { Fa6BrandsWordpress } from "./icon/WordPress";
 import Option from "./option";
 import { useEffect } from "react";
+import RunScript from "./RunScript";
 
 interface ServiceItem {
   icon: React.ReactNode;
@@ -162,6 +163,28 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
       console.log("Flavor ID for selected plan:", flavorId); // フレーバーIDを表示するかバックエンドに送信
     }
   };
+
+  // const [output, setOutput] = useState('');
+
+  // const RunScript = async () => {
+  //     try {
+  //         console.log("Running script...wwwwwww");
+  //         const res = await fetch("/api/runscript", {method: "GET"});
+  //         const data = await res.json();
+
+  //         if (res.ok) {
+  //             console.log("API call successful:", data.output);
+  //             setOutput(data.output);
+  //         } else {
+  //             console.error("API call error:", data.error);
+  //             setOutput(`Error: ${data.error}`);
+  //         }
+
+  //     } catch (error) {
+  //     console.error("Fetch error:", (error as Error).message);
+  //       setOutput(`Fetch error: ${(error as Error).message}`);
+  //     }
+  // }
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -388,6 +411,15 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
             <div>
               <Option />
             </div>
+            {/* <div className="flex justify-center mb-4">
+              <button
+                onClick={RunScript}
+                className="bg-blue-500 text-white rounded px-4 py-2"
+              >
+                シェルスクリプトを実行する
+              </button>
+            </div> */}
+            <RunScript />
           </div>
         </div>
       </div>
