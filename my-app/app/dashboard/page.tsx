@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import Service from '../components/Service';  // Serviceコンポーネントをインポート
 import Header from '../components/Header'; // Headerコンポーネントをインポート
