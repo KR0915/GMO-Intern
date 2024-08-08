@@ -5,6 +5,7 @@ import Service from '../components/Service';  // Serviceコンポーネントを
 import Header from '../components/Header'; // Headerコンポーネントをインポート
 import Sidebar from '../components/Sidebar'; // Sidebarコンポーネントをインポート
 import MoneySidebar from '../components/MoneySidebar'; // MoneySidebarコンポーネントをインポート
+import Option from '../components/option';
 
 export default function Home() {
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -19,7 +20,7 @@ export default function Home() {
     };
 
     return (
-        <div className="h-screen flex flex-col bg-custom-bg bg-cover bg-custom-right-bottom bg-fixed overflow-y-auto">
+        <div className="min-h-screen flex flex-col bg-custom-bg bg-cover bg-custom-right-bottom bg-fixed overflow-y-auto">
             <Header />
             <div className="flex-1 grid grid-cols-5">
                 <div className="col-span-1">
