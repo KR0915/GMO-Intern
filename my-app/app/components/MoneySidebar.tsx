@@ -1,24 +1,37 @@
-import React from 'react';
+"use client";
 
-interface MoneySidebarProps {
-  plan: string | null;
-  price: number | null;
-}
+import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { selectedPlanState, selectedPriceState, selectedAppState } from '../recoil/atoms';
 
-export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
+export default function MoneySidebar() {
+  const selectedPlan = useRecoilValue(selectedPlanState);
+  const selectedPrice = useRecoilValue(selectedPriceState);
+  const selectedApp = useRecoilValue(selectedAppState);
 
-  const size = 100; // 容量
-  const flavorRef = "f2a77529-1815-43a2-bc14-1f3f6b09079c"; // FlavorID
-  const imageRef = "30139c65-2650-47df-8c8f-23feb5287a48";
-  const name_tag = "test-vps"; // 名前
-  const security_groups = "IPv4v6-SSH"; //セキュリティグループ
+  const [size, setSize] = useState(100);
+  const [flavorRef, setFlavorRef] = useState("");
+  const [imageRef, setImageRef] = useState("");
+  const [volumeName, setVolumeName] = useState("volume-name");
+  const [serverName, setServerName] = useState("server-name");
+  const [securityGroups, setSecurityGroups] = useState("IPv4v6-SSH");
+
   const volumeDescription = null;
-  const volumeName = "my-name";
+  const user = "USER";
+
 
   async function create() {
-    console.log("create関数が呼ばれました"); // create関数が呼ばれたことをコンソールに出力
+    console.log("create関数が呼ばれました");
+    console.log("選択されたプラン:", selectedPlan);
+    console.log("選択された価格:", selectedPrice);
+    console.log("選択されたアプリケーション:", selectedApp);
 
-    const user = "USER";
+    // イメージの取得
+    const imageGet = await fetch(
+      `/api/getimageid?user=${user}&target=${selectedApp}`
+    );
+    const imageJson = await imageGet.json();
+    setImageRef(imageJson as string);
 
     // ボリュームの確保
     const volGetID = await fetch(`/api/getvolumeid?user=${user}`, {
@@ -31,21 +44,31 @@ export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
         volume_type: "c3j1-ds02-boot",
       }),
     });
-
     const volIDJson = await volGetID.json();
     var volume_id = volIDJson.volume?.id as string;
-    console.log("ボリュームID:", volume_id); // ボリュームIDをコンソールに出力
+    console.log("ボリュームID:", volume_id);
 
     // 完了するまで待機
     while (true) {
-      const volGetDetail = await fetch(`/api/getvolumedetail?volume_id=${volume_id}`);
+      const volGetDetail = await fetch(
+        `/api/getvolumedetail?volume_id=${volume_id}`
+      );
       const volDetail = await volGetDetail.json();
       const status = volDetail.volume.status;
-      console.log("ボリュームステータス:", status); // ボリュームステータスをコンソールに出力
-      if (status != "creating") {
-        break
+      console.log("ボリュームステータス:", status);
+      if (status !== "creating") {
+        break;
       }
     }
+
+    // フレーバーの取得
+    const flavorGet = await fetch(
+      `/api/getflavorid?user=${user}&flavor=${selectedPlan}`
+    );
+    const flavorJson = await flavorGet.json();
+    const flavorRef = flavorJson as string;
+
+    setFlavorRef(flavorRef);
 
     // 作成
     const APIcreate = await fetch(`/api/create?user=${user}`, {
@@ -53,13 +76,14 @@ export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
       body: JSON.stringify({
         flavorRef,
         volume_id,
-        name_tag,
-        security_groups,
+        name_tag: serverName,
+        security_groups: securityGroups,
+        selectedApp,
       }),
     });
 
     const createdJson = await APIcreate.json();
-    console.log("作成結果:", JSON.stringify(createdJson)); // 作成結果をコンソールに出力
+    console.log("作成結果:", JSON.stringify(createdJson));
   }
 
 
@@ -68,11 +92,11 @@ export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
       <div className="mt-4">
         <div className='flex justify-between'>
           <p className=''>選択されたプラン:</p>
-          <p className=''>{plan ? plan : '未選択'}</p>
+          <p className=''>{selectedPlan ? selectedPlan : '未選択'}</p>
         </div>
         <div className='flex justify-between'>
           <p className=''>価格:</p>
-          <p>{price ? `${price.toLocaleString()} 円 /月` : '未選択'}</p>
+          <p>{selectedPrice ? `${selectedPrice.toLocaleString()} 円 /月` : '未選択'}</p>
         </div>
         <div className='border-b-2 border-gray-300'></div>
         <div className="flex justify-center items-center mt-4">

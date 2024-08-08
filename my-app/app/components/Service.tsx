@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import { selectedPlanState, selectedPriceState, selectedAppState } from '../recoil/atoms';
 import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
 import { MdiMicrosoftWindows } from "./icon/WindowServer";
 import { BiGpuCard } from "./icon/GPUServer";
@@ -76,13 +78,17 @@ const planDetails: PlanDetail[] = [
   { size: "64GB", cpu: "CPU 24Core", ssd: "SSD 100GB", flavorId: "flavor64GB" }
 ];
 
-export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceProps) {
+export default function Services() {
+  const [selectedPlan, setSelectedPlan] = useRecoilState(selectedPlanState);
+  const [selectedPrice, setSelectedPrice] = useRecoilState(selectedPriceState);
+  const [selectedApp, setSelectedApp] = useRecoilState(selectedAppState);
+
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<string | null>(null);
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
-  const [selectedService, setSelectedService] = useState<string | null>(null); // 新しい状態を追加
+  const [selectedService, setSelectedService] = useState<string | null>(null); 
   const [rootPassword, setRootPassword] = useState("");
   const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
@@ -116,6 +122,8 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
 
   const handleAppButtonClick = (label: string) => {
     setSelectedAppButton(label);
+    setSelectedApp(label); // 選択したアプリケーションをRecoilに保存
+    console.log("Selected Application:", label); // コンソールに選択したアプリケーションを表示
   };
 
   const handleOSButtonClick = (label: string) => {
