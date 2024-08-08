@@ -7,8 +7,8 @@ import { supabase } from "@/utils/supabase";
 export type SampleJsonOjb = {
   id: string;
   name: string;
-  links: [],
-}
+  links: [];
+};
 
 export async function GET(request: Request) {
   var token = "";
@@ -69,11 +69,11 @@ export async function GET(request: Request) {
     if (flavor != null) {
       console.log(data.flavors);
       var targetID;
-      data.flavors.map((item : SampleJsonOjb) => {
-        if(item.name === targetFlavor){
+      data.flavors.map((item: SampleJsonOjb) => {
+        if (item.name === targetFlavor) {
           targetID = item.id;
         }
-      })
+      });
       //var targetID = data.flavors.find((item) => {item.name === targetFlavor})?.id
       return Response.json(targetID);
     } else {
