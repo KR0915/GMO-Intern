@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js';
 // サーバー詳細情報の取得
 
 import Auth from "../../components/Auth";
@@ -20,17 +22,30 @@ export async function GET(request: Request) {
     token = process.env.NEXT_PUBLIC_TOKEN as string;
 
     const endpoint = `https://compute.c3j1.conoha.io/v2.1/servers/${serverID}`;
-    const response = await fetch(endpoint, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "X-Auth-Token": token,
-      },
-    });
 
-    const resJson = await response.json();
-    const IPkey = Object.keys(resJson.server.addresses)[0];
-    const IP = resJson.server.addresses[IPkey][1].addr;
+    var IP = "";
+    while(IP == "") {
+      const response = await fetch(endpoint, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "X-Auth-Token": token,
+        },
+      });
+  
+      const resJson = await response.json();
+      console.log(resJson.server.status);
+
+      if(resJson.server.status != "BUILD"){
+        const IPkey = Object.keys(resJson.server.addresses)[0];
+        resJson.server.addresses[IPkey].map((item: any) => {
+          if(item.version == 4) {
+            IP = item.addr;
+          }
+        });
+      }
+    }
+    console.log(IP);
     return Response.json(IP);
   } catch (error) {
     console.log(error);

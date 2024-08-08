@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import RunScript from './RunScript';
 
 interface MoneySidebarProps {
   plan: string | null;
@@ -15,6 +16,7 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
 
   console.log("jsonData:", jsonData);
 
+  const [IPAddress, setIPAddress] = useState<string | null>(null);
   
   async function create() {
     console.log("Received JsonData:", jsonData);
@@ -95,9 +97,16 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
         security_groups,
       }),
     });
+    const serverID = await APIcreate.json(); // serverID
+    console.log("サーバーID:", JSON.stringify(serverID)); // 作成結果をコンソールに出力
 
-    const createdJson = await APIcreate.json();
-    console.log("作成結果:", JSON.stringify(createdJson)); // 作成結果をコンソールに出力
+    const GetServerDetail = await fetch(`/api/getserverdetail?serverid=${serverID}`);
+    console.log("hello");
+    const IP = await GetServerDetail.json();
+    setIPAddress(IP);
+
+    console.log("IPアドレス:", IP); // 作成結果をコンソールに出力
+    console.log("IPアドレス:", JSON.stringify(IP)); // 作成結果をコンソールに出力
   }
 
 
@@ -123,6 +132,7 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
           >
             追加
           </button>
+          <RunScript />
         </div>
       </div>
     </div>

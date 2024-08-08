@@ -444,7 +444,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                 シェルスクリプトを実行する
               </button>
             </div> */}
-            <RunScript />
           </div>
         </div>
       </div>

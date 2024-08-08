@@ -68,8 +68,10 @@ import fs from 'fs';
 import path from 'path';
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const sshHost = searchParams.get('host') as string;
+
   const sshPassword = process.env.SSH_PASSWORD;
-  const sshHost = '160.251.175.103';
   const sshUser = 'root';
   const localScriptPath = path.join(process.cwd(), 'scripts', 'flask.sh');
   const remoteScriptPath = '/root/flask.sh';
