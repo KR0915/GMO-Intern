@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
 import { MdiMicrosoftWindows } from "./icon/WindowServer";
 import { BiGpuCard } from "./icon/GPUServer";
@@ -15,9 +15,17 @@ interface ServiceItem {
   name: string;
 }
 
+/*
+const sendJsonData = useCallback ((data: any) => {
+  // Function implementation
+  console.log("Data sent:", data);
+}, []);
+*/
+
 interface ServiceProps {
   setSelectedPlan: (plan: string | null) => void;
   setSelectedPrice: (price: number | null) => void;
+  sendJsonData: (data: any) => void;
 }
 
 interface PlanDetail {
@@ -76,7 +84,7 @@ const planDetails: PlanDetail[] = [
   { size: "64GB", cpu: "CPU 24Core", ssd: "SSD 100GB", flavorId: "flavor64GB" }
 ];
 
-export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceProps) {
+export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonData }: ServiceProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
@@ -87,6 +95,9 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
   const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
 
+
+  
+  
   const pricingData: Record<string, number[]> = {
     時間課金: [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
     "１ヶ月": [459, 762, 1258, 2407, 4827, 9746, 22099, 44198],
@@ -96,6 +107,30 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
     "２４ヶ月": [310, 491, 689, 1393, 2713, 5993, 15667, 30142],
     "３６ヶ月": [296, 468, 616, 1268, 2394, 5393, 13868, 28493]
   };
+
+  // const handleServiceClick = (serviceName: string) => {
+  //   setSelectedService(serviceName);
+  // };
+
+  useEffect(() => {
+    const jsonData = {
+      size: selectedPlanLocal ? planDetails.find(plan => plan.size === selectedPlanLocal)?.size : null,
+      description: null,
+      name: nameTag,
+      imageRef: selectedOSButton || selectedAppButton,
+      volume_type: "c3j1-ds02-boot",
+      flavorId: selectedPlanLocal ? planDetails.find(plan => plan.size === selectedPlanLocal)?.flavorId : null,
+    };
+
+    // console.log("selectedPlanLocal:", selectedPlanLocal);
+    // console.log("nameTag:", nameTag);
+    // console.log("selectedOSButton:", selectedOSButton);
+    // console.log("selectedAppButton:", selectedAppButton);
+    // console.log("jsonData:", jsonData);
+    // console.log("Sending JSON data:", jsonData);
+
+    sendJsonData(jsonData);
+  }, [selectedPlanLocal, nameTag, selectedOSButton, selectedAppButton, sendJsonData]);
 
   const handleServiceClick = (serviceName: string) => {
     setSelectedService(serviceName);
