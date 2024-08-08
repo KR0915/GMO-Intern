@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 
 interface MoneySidebarProps {
@@ -36,6 +37,7 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
     console.log("create関数が呼ばれました"); // create関数が呼ばれたことをコンソールに出力
     const user = "USER";
 
+
     console.log(image);
     // イメージの取得
     const imageGet = await fetch(
@@ -56,19 +58,20 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
         volume_type,
       }),
     });
-
     const volIDJson = await volGetID.json();
     var volume_id = volIDJson.volume?.id as string;
-    console.log("ボリュームID:", volume_id); // ボリュームIDをコンソールに出力
+    console.log("ボリュームID:", volume_id);
 
     // 完了するまで待機
     while (true) {
-      const volGetDetail = await fetch(`/api/getvolumedetail?volume_id=${volume_id}`);
+      const volGetDetail = await fetch(
+        `/api/getvolumedetail?volume_id=${volume_id}`
+      );
       const volDetail = await volGetDetail.json();
       const status = volDetail.volume.status;
-      console.log("ボリュームステータス:", status); // ボリュームステータスをコンソールに出力
-      if (status != "creating") {
-        break
+      console.log("ボリュームステータス:", status);
+      if (status !== "creating") {
+        break;
       }
     }
 
@@ -84,7 +87,6 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
 
     console.log("フレーバーID:", flavorRef); // フレーバーIDをコンソールに
 
-
     // 作成
     const APIcreate = await fetch(`/api/create?user=${user}`, {
       method: "POST",
@@ -97,20 +99,31 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
     });
 
     const createdJson = await APIcreate.json();
-    console.log("作成結果:", JSON.stringify(createdJson)); // 作成結果をコンソールに出力
+    console.log("作成結果:", JSON.stringify(createdJson));
   }
-
 
   return (
     <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4 bg-opacity-80">
       <div className="mt-4">
         <div className='flex justify-between'>
-          <p className=''>選択されたプラン:</p>
-          <p className=''>{plan ? plan : '未選択'}</p>
+          <p className=''>サービス:</p>
+          <p>{selectedService || '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>メモリ:</p>
+          <p>{selectedPlan ? selectedPlan.size : '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>CPU:</p>
+          <p>{selectedPlan ? selectedPlan.cpu : '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>SSD:</p>
+          <p>{selectedPlan ? selectedPlan.ssd : '未選択'}</p>
         </div>
         <div className='flex justify-between'>
           <p className=''>価格:</p>
-          <p>{price ? `${price.toLocaleString()} 円 /月` : '未選択'}</p>
+          <p>{selectedPrice ? `${selectedPrice.toLocaleString()} 円 /月` : '未選択'}</p>
         </div>
         <div className='border-b-2 border-gray-300'></div>
         <div className="flex justify-center items-center mt-4">

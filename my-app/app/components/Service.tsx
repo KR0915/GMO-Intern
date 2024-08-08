@@ -1,3 +1,4 @@
+
 import React, { useCallback, useEffect, useState } from "react";
 import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
 import { MdiMicrosoftWindows } from "./icon/WindowServer";
@@ -15,12 +16,7 @@ interface ServiceItem {
   name: string;
 }
 
-/*
-const sendJsonData = useCallback ((data: any) => {
-  // Function implementation
-  console.log("Data sent:", data);
-}, []);
-*/
+
 
 interface ServiceProps {
   setSelectedPlan: (plan: string | null) => void;
@@ -43,7 +39,7 @@ const services: ServiceItem[] = [
   { icon: <MdiDatabase />, name: "DBサーバー" },
 ];
 
-const display_rectangleButtonLabels = [
+const displayRectangleButtonLabels = [
   { label: "かんたんKUSANAGI", icon: <Fa6BrandsWordpress /> },
   { label: "Mattermost", icon: <MdiApplicationBracesOutline /> },
   { label: "Docker", icon: <LogosDockerIcon /> },
@@ -56,7 +52,7 @@ const roundButtonLabelsOS = [
   "Oracle Linux", "MIRACLE LINUX", "FreeBSD", "Arch Linux", "NetBSD", "OpenBSD"
 ];
 
-const storage_rectangleButtonLabels = [
+const storageRectangleButtonLabels = [
   "WordPress<br/>(KUSANAGI)", "Dokku", "Node.js", "webmin", "Prometheus",
   "Cacti Nagios", "Laravel", "LEMP(PHP)", "Mastodon", "Misskey",
   "Zabbix", "Ruby on Rails", "ownCloud", "Nextcloud", "GitLab",
@@ -85,12 +81,12 @@ const planDetails: PlanDetail[] = [
 ];
 
 export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonData }: ServiceProps) {
+
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<string | null>(null);
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
-  const [selectedService, setSelectedService] = useState<string | null>(null); // 新しい状態を追加
   const [rootPassword, setRootPassword] = useState("");
   const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
@@ -151,6 +147,8 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
 
   const handleAppButtonClick = (label: string) => {
     setSelectedAppButton(label);
+    setSelectedApp(label); // 選択したアプリケーションをRecoilに保存
+    console.log("Selected Application:", label); // コンソールに選択したアプリケーションを表示
   };
 
   const handleOSButtonClick = (label: string) => {
@@ -159,7 +157,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
 
   const handlePricingClick = (option: string) => {
     setSelectedPricing(option);
-    setSelectedPlanLocal(null); // Reset plan when pricing changes
+    setSelectedPlanLocal(null); // プランが変わったときにリセット
     setSelectedPlan(null);
     setSelectedPrice(null);
   };
@@ -167,15 +165,14 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
   const handlePlanClick = (option: string) => {
     const planDetail = planDetails.find(plan => plan.size === option);
     if (planDetail) {
-      const { flavorId } = planDetail;
       setSelectedPlanLocal(option);
-      setSelectedPlan(option);
+      setSelectedPlan(planDetail); // PlanDetail型を保存
 
       const priceIndex = planDetails.findIndex(plan => plan.size === option);
       const price = selectedPricing ? pricingData[selectedPricing][priceIndex] : null;
 
       setSelectedPrice(price);
-      console.log("Flavor ID for selected plan:", flavorId); // フレーバーIDを表示するかバックエンドに送信
+      console.log("Flavor ID for selected plan:", planDetail.flavorId); // フレーバーIDを表示するかバックエンドに送信
     }
   };
 
@@ -227,7 +224,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
           {selectedOption === "アプリケーション" && (
             <div>
               <div className="grid grid-cols-3 gap-2">
-                {display_rectangleButtonLabels.map((item, index) => (
+                {displayRectangleButtonLabels.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => handleAppButtonClick(item.label)}
@@ -247,7 +244,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
 
               {showMore && (
                 <div className="grid grid-cols-5 gap-2 mt-4">
-                  {storage_rectangleButtonLabels.map((label, index) => (
+                  {storageRectangleButtonLabels.map((label, index) => (
                     <button
                       key={index}
                       onClick={() => handleAppButtonClick(label)}
