@@ -4,8 +4,8 @@ export async function POST(request : Request) {
   try {
     const {searchParams} = new URL(request.url);
     const user = searchParams.get("user");
-    const password = process.env.PASSWORD as string;
-    const token = process.env.TOKEN as string;
+    const password = process.env.NEXT_PUBLIC_PASSWORD as string;
+    const token = process.env.NEXT_PUBLIC_TOKEN as string;
     const body = await request.json();
 
     const endpoint = "https://compute.c3j1.conoha.io/v2.1/servers";
