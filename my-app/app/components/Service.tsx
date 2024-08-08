@@ -8,6 +8,7 @@ import { IcSharpPhp } from "./icon/Php";
 import { LogosDockerIcon } from "./icon/Docker";
 import { MdiApplicationBracesOutline } from "./icon/CodeEditar";
 import { Fa6BrandsWordpress } from "./icon/WordPress";
+import Option from './option';
 
 
 interface ServiceItem {
@@ -146,9 +147,9 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
       {services.map(service => (
         <button
           key={service.name}
-          className="bg-white border border-black shadow-md rounded-lg p-2 flex flex-col items-center text-center h-24 w-48"
+          className="bg-white border border-black shadow-md rounded-lg p-2 flex flex-col items-center text-center h-24 w-48 hover:border-blue-400 group"
         >
-          <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
+          <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-400">{service.name}</h3>
           <hr className="w-full mb-2" />
           <div className="p-2">{service.icon}</div>
         </button>
@@ -182,7 +183,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
               className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tight ${
                 selectedAppButton === item.label
                   ? "bg-blue-400 text-white"
-                  : "bg-white text-black"
+                  : "bg-white text-black  hover:border-blue-400 hover:text-blue-400"
               }`}
             >
             <div className="flex items-center justify-center">
@@ -199,10 +200,10 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
               <button
                 key={index}
                 onClick={() => handleAppButtonClick(label)}
-                className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tight ${
+                className={`h-20 w-full border border-black rounded text-center px-2 py-1 leading-tight group ${
                   selectedAppButton === label
                     ? "bg-blue-400 text-white"
-                    : "bg-white text-black"
+                    : "bg-white text-black hover:border-blue-400 group hover:text-blue-400 group"
                 }`}
                 dangerouslySetInnerHTML={{ __html: label }}
               />
@@ -229,7 +230,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
                 className={`rounded px-4 py-2 ${
                   selectedPricing === option
                     ? "bg-blue-400 text-white"
-                    : "bg-white border border-black text-black"
+                    : "bg-white border border-black text-black hover:border-blue-400 hover:text-blue-400"
                 }`}
               >
                 {option}
@@ -248,7 +249,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
                     className={`rounded px-4 py-2 ${
                       selectedPlanLocal === option 
                       ? "bg-blue-400 text-white" 
-                      : "bg-white border border-black text-black"
+                      : "bg-white border border-black text-black hover:border-blue-400 hover:text-blue-400"
                     }`}
                   >
                     {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
@@ -269,7 +270,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
               onClick={() => handleOSButtonClick(label)}
               className={`h-24 w-36 rounded-full border border-black text-center px-4 py-2 leading-tight ${selectedOSButton === label
                   ? "bg-blue-300 text-white"
-                  : "bg-white text-black"}`}
+                  : "bg-white text-black hover:border-blue-400 hover:text-blue-400"}`}
             >
               {label}
             </button>
@@ -283,7 +284,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
                   onClick={() => handlePricingClick(option)}
                   className={`rounded px-4 py-2 ${selectedPricing === option
                       ? "bg-blue-400 text-white"
-                      : "bg-white border border-black text-black"}`}
+                      : "bg-white border border-black text-black hover:border-blue-400 hover:text-blue-400"}`}
                 >
                   {option}
                 </button>
@@ -300,7 +301,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
                     className={`rounded px-4 py-2 ${
                       selectedPlanLocal === option 
                       ? "bg-blue-400 text-white" 
-                      : "bg-white border border-black text-black"
+                      : "bg-white border border-black text-black hover:border-blue-400 hover:text-blue-400"
                     }`}
                   >
                     {option} {selectedPricing ? `¥${pricingData[selectedPricing][index]} /月` : ""}
@@ -332,8 +333,15 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
             onChange={e => setNameTag(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded"
           />
+          <div>
+            <div>
+                <Option />
+            </div>
         </div>
         </div>
+        </div>
+      </div>
+      <div>
       </div>
       </div>
       </div>
