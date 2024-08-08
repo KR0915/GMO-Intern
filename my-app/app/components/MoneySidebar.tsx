@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { selectedPlanState, selectedPriceState, selectedAppState } from '../recoil/atoms';
+import { selectedPlanState, selectedPriceState, selectedAppState, selectedServiceState } from '../recoil/atoms';
 
 export default function MoneySidebar() {
   const selectedPlan = useRecoilValue(selectedPlanState);
   const selectedPrice = useRecoilValue(selectedPriceState);
   const selectedApp = useRecoilValue(selectedAppState);
+  const selectedService = useRecoilValue(selectedServiceState);
 
   const [size, setSize] = useState(100);
   const [flavorRef, setFlavorRef] = useState("");
@@ -21,7 +22,10 @@ export default function MoneySidebar() {
 
   async function create() {
     console.log("create関数が呼ばれました");
-    console.log("選択されたプラン:", selectedPlan);
+    console.log("選択されたサービス:", selectedService);
+    console.log("選択されたプラン:", selectedPlan ? selectedPlan.size : "未選択");
+    console.log("選択されたCPU:", selectedPlan ? selectedPlan.cpu : "未選択");
+    console.log("選択されたSSD:", selectedPlan ? selectedPlan.ssd : "未選択");
     console.log("選択された価格:", selectedPrice);
     console.log("選択されたアプリケーション:", selectedApp);
 
@@ -62,7 +66,7 @@ export default function MoneySidebar() {
 
     // フレーバーの取得
     const flavorGet = await fetch(
-      `/api/getflavorid?user=${user}&flavor=${selectedPlan}`
+      `/api/getflavorid?user=${user}&flavor=${selectedPlan ? selectedPlan.size : ''}`
     );
     const flavorJson = await flavorGet.json();
     const flavorRef = flavorJson as string;
@@ -86,14 +90,33 @@ export default function MoneySidebar() {
   }
 
   return (
-    <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4">
+    <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4 bg-opacity-80">
       <div className="mt-4">
-        <p>選択されたプラン: {selectedPlan || '未選択'}</p>
-        <p>価格: {selectedPrice ? `${selectedPrice.toLocaleString()} 円 /月` : '未選択'}</p>
+        <div className='flex justify-between'>
+          <p className=''>サービス:</p>
+          <p>{selectedService || '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>メモリ:</p>
+          <p>{selectedPlan ? selectedPlan.size : '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>CPU:</p>
+          <p>{selectedPlan ? selectedPlan.cpu : '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>SSD:</p>
+          <p>{selectedPlan ? selectedPlan.ssd : '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>価格:</p>
+          <p>{selectedPrice ? `${selectedPrice.toLocaleString()} 円 /月` : '未選択'}</p>
+        </div>
+        <div className='border-b-2 border-gray-300'></div>
         <div className="flex justify-center items-center mt-4">
           <button
             onClick={() => {
-              console.log("追加ボタンがクリックされました");
+              console.log("追加ボタンがクリックされました"); // 追加ボタンがクリックされたことをコンソールに出力
               create();
             }}
             className="bg-blue-500 text-white py-2 px-4 rounded"

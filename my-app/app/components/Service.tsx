@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import { selectedPlanState, selectedPriceState, selectedAppState } from '../recoil/atoms';
+import { selectedPlanState, selectedPriceState, selectedAppState, selectedServiceState } from '../recoil/atoms';
 import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
 import { MdiMicrosoftWindows } from "./icon/WindowServer";
 import { BiGpuCard } from "./icon/GPUServer";
@@ -17,12 +17,7 @@ interface ServiceItem {
   name: string;
 }
 
-interface ServiceProps {
-  setSelectedPlan: (plan: string | null) => void;
-  setSelectedPrice: (price: number | null) => void;
-}
-
-interface PlanDetail {
+export interface PlanDetail { // PlanDetailをエクスポート
   size: string;
   cpu: string;
   ssd: string;
@@ -37,7 +32,7 @@ const services: ServiceItem[] = [
   { icon: <MdiDatabase />, name: "DBサーバー" },
 ];
 
-const display_rectangleButtonLabels = [
+const displayRectangleButtonLabels = [
   { label: "かんたんKUSANAGI", icon: <Fa6BrandsWordpress /> },
   { label: "Mattermost", icon: <MdiApplicationBracesOutline /> },
   { label: "Docker", icon: <LogosDockerIcon /> },
@@ -50,7 +45,7 @@ const roundButtonLabelsOS = [
   "Oracle Linux", "MIRACLE LINUX", "FreeBSD", "Arch Linux", "NetBSD", "OpenBSD"
 ];
 
-const storage_rectangleButtonLabels = [
+const storageRectangleButtonLabels = [
   "WordPress<br/>(KUSANAGI)", "Dokku", "Node.js", "webmin", "Prometheus",
   "Cacti Nagios", "Laravel", "LEMP(PHP)", "Mastodon", "Misskey",
   "Zabbix", "Ruby on Rails", "ownCloud", "Nextcloud", "GitLab",
@@ -82,13 +77,13 @@ export default function Services() {
   const [selectedPlan, setSelectedPlan] = useRecoilState(selectedPlanState);
   const [selectedPrice, setSelectedPrice] = useRecoilState(selectedPriceState);
   const [selectedApp, setSelectedApp] = useRecoilState(selectedAppState);
+  const [selectedService, setSelectedService] = useRecoilState(selectedServiceState);
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<string | null>(null);
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
-  const [selectedService, setSelectedService] = useState<string | null>(null);
   const [rootPassword, setRootPassword] = useState("");
   const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
@@ -132,7 +127,7 @@ export default function Services() {
 
   const handlePricingClick = (option: string) => {
     setSelectedPricing(option);
-    setSelectedPlanLocal(null);
+    setSelectedPlanLocal(null); // プランが変わったときにリセット
     setSelectedPlan(null);
     setSelectedPrice(null);
   };
@@ -140,15 +135,14 @@ export default function Services() {
   const handlePlanClick = (option: string) => {
     const planDetail = planDetails.find(plan => plan.size === option);
     if (planDetail) {
-      const { flavorId } = planDetail;
       setSelectedPlanLocal(option);
-      setSelectedPlan(option);
+      setSelectedPlan(planDetail); // PlanDetail型を保存
 
       const priceIndex = planDetails.findIndex(plan => plan.size === option);
       const price = selectedPricing ? pricingData[selectedPricing][priceIndex] : null;
 
       setSelectedPrice(price);
-      console.log("Flavor ID for selected plan:", flavorId); // フレーバーIDを表示するかバックエンドに送信
+      console.log("Flavor ID for selected plan:", planDetail.flavorId); // フレーバーIDを表示するかバックエンドに送信
     }
   };
 
@@ -200,7 +194,7 @@ export default function Services() {
           {selectedOption === "アプリケーション" && (
             <div>
               <div className="grid grid-cols-3 gap-2">
-                {display_rectangleButtonLabels.map((item, index) => (
+                {displayRectangleButtonLabels.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => handleAppButtonClick(item.label)}
@@ -220,7 +214,7 @@ export default function Services() {
 
               {showMore && (
                 <div className="grid grid-cols-5 gap-2 mt-4">
-                  {storage_rectangleButtonLabels.map((label, index) => (
+                  {storageRectangleButtonLabels.map((label, index) => (
                     <button
                       key={index}
                       onClick={() => handleAppButtonClick(label)}
@@ -335,7 +329,7 @@ export default function Services() {
                       className={`rounded px-4 py-2 ${
                         selectedPlanLocal === plan.size
                           ? "bg-blue-400 text-white"
-                          : "bg-white border border-black text-black "
+                          : "bg-white border border-black text-black hover:border-blue-400 hover:text-blue-400"
                       }`}
                     >
                       <div className="text-center">
@@ -352,6 +346,7 @@ export default function Services() {
           )}
 
           {/* Rootパスワードとネームタグの入力欄 */}
+          <div className='border-b-2 border-b-slate-400 mt-2'></div>
           <div className="col-span-3">
             <div className="flex flex-col items-center mb-4">
               <label htmlFor="rootPassword">Rootパスワード:</label>
@@ -372,6 +367,9 @@ export default function Services() {
                 onChange={e => setNameTag(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded"
               />
+            </div>
+            <div>
+              <Option />
             </div>
           </div>
         </div>
