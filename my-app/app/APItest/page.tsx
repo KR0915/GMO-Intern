@@ -3,11 +3,10 @@
 import { useState } from "react";
 
 export default function Page() {
-  const user = "USER";
   const [token, setToken] = useState("");
 
   const size = 100; // 容量
-  const flavorRef = "6f3c4747-8471-4a38-902b-4c57ad76d776"; // FlavorID
+  const flavorRef = "f2a77529-1815-43a2-bc14-1f3f6b09079c"; // FlavorID
   const imageRef = "30139c65-2650-47df-8c8f-23feb5287a48";
   const name_tag = "test-vps"; // 名前
   const security_groups = "IPv4v6-SSH"; //セキュリティグループ

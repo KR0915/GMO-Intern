@@ -8,11 +8,13 @@ export async function GET(request: Request) {
     let password;
     let projectname;
 
+    /*
     const { data, error } = await supabase
       .from('users')
       .select('user_id, password, project_name')
       .eq('id', user);
 
+      
     if (error) {
       console.error('Error fetching data: ', error);
       return new Response(JSON.stringify({ error: "Data fetch error" }), { status: 500 });
@@ -26,6 +28,11 @@ export async function GET(request: Request) {
       console.error('User not found');
       return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
     }
+      */
+
+    userid = process.env.NEXT_PUBLIC_USERID;
+    password = process.env.NEXT_PUBLIC_PASSWORD;
+    projectname = process.env.NEXT_PUBLIC_PROJECTNAME;
 
     const endpoint = "https://identity.c3j1.conoha.io/v3/auth/tokens"; // APIのエンドポイント
     const response = await fetch(endpoint, {
