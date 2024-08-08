@@ -4,6 +4,7 @@ import Service from '../components/Service';  // Serviceコンポーネントを
 import Header from '../components/Header'; // Headerコンポーネントをインポート
 import Sidebar from '../components/Sidebar'; // Sidebarコンポーネントをインポート
 import MoneySidebar from '../components/MoneySidebar'; // MoneySidebarコンポーネントをインポート
+import Option from '../components/option';
 
 export default function Home() {
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);

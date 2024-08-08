@@ -5,8 +5,11 @@ export async function POST(request: Request) {
     const url = new URL(request.url);
     const searchParams = url.searchParams;
     const user = searchParams.get("user");
-    const token = process.env.TOKEN as string; // トークンの取得
+    console.log(user);
+    const token = process.env.NEXT_PUBLIC_TOKEN as string; // トークンの取得
     const projectname = process.env.NEXT_PUBLIC_PROJECTNAME;
+
+    console.log(token);
 
     const body = await request.json();
 
