@@ -1,7 +1,13 @@
+// atoms.ts
 import { atom } from 'recoil';
 
-// プラン、価格、アプリケーションの状態を管理するためのRecoil atoms
-export const selectedPlanState = atom<string | null>({
+interface PlanDetail {
+  size: string;
+  cpu: string;
+  ssd: string;
+}
+
+export const selectedPlanState = atom<PlanDetail | null>({
   key: 'selectedPlanState',
   default: null,
 });
@@ -16,3 +22,12 @@ export const selectedAppState = atom<string | null>({
   default: null,
 });
 
+export const selectedServiceState = atom<string | null>({
+  key: 'selectedServiceState',
+  default: null,
+});
+
+export const selectedOptionState = atom<string | null>({
+  key: 'selectedOptionState',
+  default: null,
+});
