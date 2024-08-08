@@ -1,24 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface MoneySidebarProps {
   plan: string | null;
   price: number | null;
+  jsonData: any; // jsonData プロパティを追加
 }
 
-export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
+export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProps) {
 
-  const size = 100; // 容量
-  const flavorRef = "f2a77529-1815-43a2-bc14-1f3f6b09079c"; // FlavorID
-  const imageRef = "30139c65-2650-47df-8c8f-23feb5287a48";
-  const name_tag = "test-vps"; // 名前
-  const security_groups = "IPv4v6-SSH"; //セキュリティグループ
-  const volumeDescription = null;
-  const volumeName = "my-name";
 
+  // useEffect(() => {
+  //   console.log("jsonData:", jsonData); // jsonDataをコンソールに出力
+  // }, []); // 依存配列を空にする
+
+  console.log("jsonData:", jsonData);
+
+  
   async function create() {
-    console.log("create関数が呼ばれました"); // create関数が呼ばれたことをコンソールに出力
+    console.log("Received JsonData:", jsonData);
+    console.log(jsonData.imageRef);
+    const size = 100; // 容量
+    const flavor = jsonData.flavorId; // フレーバー -> 追加
+    const image = jsonData.imageRef; // イメージ -> 改修
+    // const image = "Docker"; // イメージデバッグ
+    const volumeName = jsonData.name; // ボリューム名
+    const ServerName = jsonData.name; // サーバー名
+    const security_groups = "IPv4v6-SSH"; //セキュリティグループ
+    const volumeDescription = jsonData.description; // 説明
+    const volume_type = jsonData.volume_type; // ボリュームタイプ
+  
 
+
+
+
+    console.log("create関数が呼ばれました"); // create関数が呼ばれたことをコンソールに出力
     const user = "USER";
+
+    console.log(image);
+    // イメージの取得
+    const imageGet = await fetch(
+      `/api/getimageid?user=${user}&target=${image}`
+    );
+    const imageJson = await imageGet.json();
+    console.log(imageJson);
+    const imageRef = imageJson as string;
 
     // ボリュームの確保
     const volGetID = await fetch(`/api/getvolumeid?user=${user}`, {
@@ -28,7 +53,7 @@ export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
         description: volumeDescription,
         name: volumeName,
         imageRef: imageRef,
-        volume_type: "c3j1-ds02-boot",
+        volume_type,
       }),
     });
 
@@ -47,13 +72,26 @@ export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
       }
     }
 
+    console.log("ボリューム作成完了"); // ボリューム作成完了をコンソールに出力
+    console.log(flavor);
+
+    // フレーバーの取得
+    const flavorGet = await fetch(
+      `/api/getflavorid?user=${user}&flavor=${flavor}`
+    );
+    const flavorJson = await flavorGet.json();
+    const flavorRef = flavorJson as string;
+
+    console.log("フレーバーID:", flavorRef); // フレーバーIDをコンソールに
+
+
     // 作成
     const APIcreate = await fetch(`/api/create?user=${user}`, {
       method: "POST",
       body: JSON.stringify({
         flavorRef,
         volume_id,
-        name_tag,
+        name_tag: ServerName,
         security_groups,
       }),
     });
