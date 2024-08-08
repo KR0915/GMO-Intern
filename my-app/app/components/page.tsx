@@ -1,9 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import MoneySidebar from './MoneySidebar';
+import Service from './Service'; 
 
 export default function Page() {
   const [token, setToken] = useState("");
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
 
   const size = 100; // 容量
   const flavorRef = "f2a77529-1815-43a2-bc14-1f3f6b09079c"; // FlavorID
@@ -13,15 +17,15 @@ export default function Page() {
   const volumeDescription = null;
   const volumeName = "my-name";
 
-  async function getToken() {
-    const res = await fetch(
-      "/api/gettoken?user=d4b10aeb-7f1e-4e21-96c4-528a5afacd5b"
-    );
-    const token = await res.json();
-    setToken(token);
+  async function test()
+  {
+    console.log("TEST");
   }
 
+
   async function create() {
+    console.log("Create function executed"); // 追加ボタンが押されたことを確認するためのログ
+
     const user = "USER";
 
     // ボリュームの確保
@@ -42,9 +46,7 @@ export default function Page() {
 
     // 完了するまで待機
     while (true) {
-      const volGetDetail = await fetch(
-        `/api/getvolumedetail?volume_id=${volume_id}`
-      );
+      const volGetDetail = await fetch(`/api/getvolumedetail?volume_id=${volume_id}`);
       const volDetail = await volGetDetail.json();
       const status = volDetail.volume.status;
       console.log(status);
@@ -70,12 +72,8 @@ export default function Page() {
 
   return (
     <div className="text-center mt-8">
-      <div>
-        <button className="p-2" onClick={create}>
-          Create!
-        </button>
-        <p>{token}</p>
-      </div>
+      <Service setSelectedPlan={setSelectedPlan} setSelectedPrice={setSelectedPrice} />
+      <MoneySidebar plan={selectedPlan} price={selectedPrice} onCreate={create} />
     </div>
   );
 }

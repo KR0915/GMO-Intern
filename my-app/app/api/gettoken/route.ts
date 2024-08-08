@@ -1,4 +1,4 @@
-import { supabase } from '@/utils/supabase';
+import { supabase } from "@/utils/supabase";
 
 export async function GET(request: Request) {
   try {
@@ -63,19 +63,26 @@ export async function GET(request: Request) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('Error fetching token:', errorData);
-      return new Response(JSON.stringify({ error: "Token fetch error" }), { status: response.status });
+      console.error("Error fetching token:", errorData);
+      return new Response(JSON.stringify({ error: "Token fetch error" }), {
+        status: response.status,
+      });
     }
 
     const token = response.headers.get("x-subject-token");
     if (!token) {
-      console.error('No token found in response headers');
-      return new Response(JSON.stringify({ error: "Token not found in response" }), { status: 500 });
+      console.error("No token found in response headers");
+      return new Response(
+        JSON.stringify({ error: "Token not found in response" }),
+        { status: 500 }
+      );
     }
 
     return new Response(JSON.stringify({ token }), { status: 200 });
   } catch (error) {
-    console.log('Unexpected error:', error);
-    return new Response(JSON.stringify({ error: "Unexpected error" }), { status: 500 });
+    console.log("Unexpected error:", error);
+    return new Response(JSON.stringify({ error: "Unexpected error" }), {
+      status: 500,
+    });
   }
 }
