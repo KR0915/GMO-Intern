@@ -47,7 +47,7 @@ export default function Sidebar() {
             <a>
               <li
                 className={`flex items-center p-3 rounded transition-colors cursor-pointer 
-                  ${item.label === 'サーバー追加' ? 'bg-blue-400 text-white' : 'hover:bg-gray-100'}`}
+                  ${item.label === 'サーバー追加' ? 'bg-blue-400 text-white' : 'hover:bg-blue-200'}`}
               >
                 <span className="mr-3 text-xl">{item.icon}</span>
                 <span className="text-lg">{item.label}</span>
