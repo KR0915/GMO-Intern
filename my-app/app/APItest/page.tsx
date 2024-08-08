@@ -14,8 +14,8 @@ export default function Page() {
   const volumeDescription = null;
   const volumeName = "my-name";
 
-  async function getToken() {
-    const res = await fetch("/api/gettoken");
+  async function getToken() { 
+    const res = await fetch("/api/gettoken?user=d4b10aeb-7f1e-4e21-96c4-528a5afacd5b");
     const token = await res.json();
     setToken(token);
   }
