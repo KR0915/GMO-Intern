@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useEffect, useState } from "react";
 import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
 import { MdiMicrosoftWindows } from "./icon/WindowServer";
@@ -9,6 +11,8 @@ import { LogosDockerIcon } from "./icon/Docker";
 import { MdiApplicationBracesOutline } from "./icon/CodeEditar";
 import { Fa6BrandsWordpress } from "./icon/WordPress";
 import Option from "./option";
+import { useEffect } from "react";
+import RunScript from "./RunScript";
 
 interface ServiceItem {
   icon: React.ReactNode;
@@ -85,6 +89,7 @@ const planDetails: PlanDetail[] = [
 ];
 
 export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonData }: ServiceProps) {
+
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
@@ -99,7 +104,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
   
   
   const pricingData: Record<string, number[]> = {
-    時間課金: [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
+    "時間課金": [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
     "１ヶ月": [459, 762, 1258, 2407, 4827, 9746, 22099, 44198],
     "３ヶ月": [399, 666, 1055, 2189, 4389, 8144, 19939, 39884],
     "６ヶ月": [347, 547, 892, 1712, 3431, 6610, 18491, 36989],
@@ -184,6 +189,28 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
       console.log("Flavor ID for selected plan:", flavorId); // フレーバーIDを表示するかバックエンドに送信
     }
   };
+
+  // const [output, setOutput] = useState('');
+
+  // const RunScript = async () => {
+  //     try {
+  //         console.log("Running script...wwwwwww");
+  //         const res = await fetch("/api/runscript", {method: "GET"});
+  //         const data = await res.json();
+
+  //         if (res.ok) {
+  //             console.log("API call successful:", data.output);
+  //             setOutput(data.output);
+  //         } else {
+  //             console.error("API call error:", data.error);
+  //             setOutput(`Error: ${data.error}`);
+  //         }
+
+  //     } catch (error) {
+  //     console.error("Fetch error:", (error as Error).message);
+  //       setOutput(`Fetch error: ${(error as Error).message}`);
+  //     }
+  // }
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -410,6 +437,15 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
             <div>
               <Option />
             </div>
+            {/* <div className="flex justify-center mb-4">
+              <button
+                onClick={RunScript}
+                className="bg-blue-500 text-white rounded px-4 py-2"
+              >
+                シェルスクリプトを実行する
+              </button>
+            </div> */}
+            <RunScript />
           </div>
         </div>
       </div>
