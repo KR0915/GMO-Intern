@@ -6,8 +6,7 @@ export async function GET(request: Request) {
     const user = searchParams.get("user");
     const token = process.env.NEXT_PUBLIC_TOKEN as string;
 
-    const endpoint =
-      "https://image-service.c3j1.conoha.io/v2/images?limit=200";
+    const endpoint = "https://image-service.c3j1.conoha.io/v2/images?limit=200";
     const response = await fetch(endpoint, {
       method: "GET",
       headers: {

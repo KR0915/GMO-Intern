@@ -1,8 +1,8 @@
 // VPSの作成
 //  https://doc.conoha.jp/api-vps3/compute-create_vm-v3/
-export async function POST(request : Request) {
+export async function POST(request: Request) {
   try {
-    const {searchParams} = new URL(request.url);
+    const { searchParams } = new URL(request.url);
     const user = searchParams.get("user");
     const password = process.env.NEXT_PUBLIC_PASSWORD as string;
     const token = process.env.NEXT_PUBLIC_TOKEN as string;
@@ -19,9 +19,9 @@ export async function POST(request : Request) {
         server: {
           flavorRef: body.flavorRef,
           adminPass: password,
-          "block_device_mapping_v2":  [{"uuid": body.volume_id}],
-          "metadata": {"instance_name_tag": body.name_tag},
-          "security_groups": [{"name": body.security_groups}]
+          block_device_mapping_v2: [{ uuid: body.volume_id }],
+          metadata: { instance_name_tag: body.name_tag },
+          security_groups: [{ name: body.security_groups }],
         },
       }),
     });
@@ -31,4 +31,4 @@ export async function POST(request : Request) {
     console.log(error);
     throw error;
   }
-};
+}
