@@ -24,14 +24,14 @@ export default function NotFound() {
                 <Loading />
             ) : (
                 <>
-                    <h1>404 - Page Not Found</h1>
-                    <p>お探しのページは見つかりませんでした。</p>
+                    <h1 className="text-4xl">404 - Page Not Found</h1>
+                    <p className="text-2xl">お探しのページは見つかりませんでした。</p>
                     <br></br>
-                    <Image src="/images/404-2.png" alt="404" width={120} height={120} />
+                    <Image src="/images/404-2.png" alt="404" width={240} height={240} />
                     <br></br>
                     <br></br>
                     <Link href="/dashboard" legacyBehavior>
-                        <a className="text-black hover:text-blue-500" onClick={handleLinkClick}>
+                        <a className="text-black hover:text-blue-500 text-2xl" onClick={handleLinkClick}>
                             コントロールパネルに戻る
                         </a>
                     </Link>
