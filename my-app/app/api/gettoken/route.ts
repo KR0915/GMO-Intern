@@ -17,7 +17,7 @@ export async function GET(request: Request) {
       console.error('Error fetching data: ', error);
       return new Response(JSON.stringify({ error: "Data fetch error" }), { status: 500 });
     }
-
+    
     if (data && data.length > 0) {
       userid = data[0].user_id;
       password = data[0].password;

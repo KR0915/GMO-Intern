@@ -1,21 +1,19 @@
 import React from 'react';
 
-export default function MoneySidebar() {
+interface MoneySidebarProps {
+  plan: string | null;
+  price: number | null;
+}
+
+export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
     return (
-        <div className="ml-[1rem] border-l border-gray-400 pl-2 h-80 mt-10">
+        <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4"> {/* ヘッダーの高さに合わせて調整 */}
             <div className="mt-4">
-                <p>サービス: VPS</p>
-                <p>CPU: 3Core</p>
-                <p>メモリ: 2GB</p>
-                <p>SSD: 100GB</p>
-                <p className="border-b border-gray-300 pb-2 px-4">料金内訳</p>
-                <p>サーバー料金: 5,350 円（6ヶ月分）</p>
-                <p>料金タイプ: まとめトク</p>
-                <p>契約期間: 2025/02/07</p>
-                <hr className="border-gray-300 my-2" />
-                <h2 className="mt-4">合計</h2>
-                <p>5,350 円 (消費税 486.39 円)</p>
-                <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">続ける</button>
+                <p>選択されたプラン: {plan || '未選択'}</p>
+                <p>価格: {price ? `${price.toLocaleString()} 円 /月` : '未選択'}</p>
+                <div className="flex justify-center items-center mt-4">
+                    <button className="bg-blue-500 text-white py-2 px-4 rounded">追加</button>
+                </div>
             </div>
         </div>
     );
