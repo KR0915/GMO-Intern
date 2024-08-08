@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       var targetID = "Hello";
       data.images.forEach((item: JsonObj) => {
         item.tags.forEach((tag: string) => {
-          if (tag === `app_name=${target}`) {
+          if (tag === `app_name=${target}` || tag === `dst_name=${target}`) {
             targetID = item.id;
           }
         });

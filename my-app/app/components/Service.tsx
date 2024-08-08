@@ -92,7 +92,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null); // 新しい状態を追加
   const [rootPassword, setRootPassword] = useState("");
-  const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
+  const [nameTag, setNameTag] = useState<string>("");
   const [showMore, setShowMore] = useState(false);
 
 
@@ -111,6 +111,13 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
   // const handleServiceClick = (serviceName: string) => {
   //   setSelectedService(serviceName);
   // };
+  useEffect(() => {
+    const date = new Date();
+    setNameTag(
+      "vps-" + date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2) + "-" + ("0" + date.getHours()).slice(-2) + "-" + ("0" + date.getMinutes()).slice(-2)
+    );
+  }, []);
+
 
   useEffect(() => {
     const jsonData = {
@@ -146,7 +153,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
     setSelectedPlan(null);
     setSelectedPrice(null);
     setRootPassword("");
-    setNameTag("vps-2024-08-07-10-03");
   };
 
   const handleAppButtonClick = (label: string) => {
