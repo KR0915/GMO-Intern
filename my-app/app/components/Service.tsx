@@ -82,6 +82,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<string | null>(null);
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
+  const [selectedService, setSelectedService] = useState<string | null>(null); // 新しい状態を追加
   const [rootPassword, setRootPassword] = useState("");
   const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
@@ -94,6 +95,10 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
     "１２ヶ月": [321, 508, 757, 1522, 3052, 6233, 16567, 33142],
     "２４ヶ月": [310, 491, 689, 1393, 2713, 5993, 15667, 30142],
     "３６ヶ月": [296, 468, 616, 1268, 2394, 5393, 13868, 28493]
+  };
+
+  const handleServiceClick = (serviceName: string) => {
+    setSelectedService(serviceName);
   };
 
   const handleOptionClick = (option: string) => {
@@ -220,7 +225,12 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
             {services.map(service => (
               <button
                 key={service.name}
-                className="bg-white border border-black shadow-md rounded-lg p-2 flex flex-col items-center text-center h-24 w-48"
+                onClick={() => handleServiceClick(service.name)}
+                className={`bg-white border border-black shadow-md rounded-lg p-2 flex flex-col items-center text-center h-24 w-48 ${
+                  selectedService === service.name 
+                  ? "bg-blue-400 text-white" 
+                  : "bg-white text-black"
+                }`}
               >
                 <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
                 <hr className="w-full mb-2" />
