@@ -1,40 +1,51 @@
-"use client";
 
-import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { selectedPlanState, selectedPriceState, selectedAppState, selectedServiceState } from '../recoil/atoms';
+import React, { useEffect } from 'react';
 
-export default function MoneySidebar() {
-  const selectedPlan = useRecoilValue(selectedPlanState);
-  const selectedPrice = useRecoilValue(selectedPriceState);
-  const selectedApp = useRecoilValue(selectedAppState);
-  const selectedService = useRecoilValue(selectedServiceState);
+interface MoneySidebarProps {
+  plan: string | null;
+  price: number | null;
+  jsonData: any; // jsonData プロパティを追加
+}
 
-  const [size, setSize] = useState(100);
-  const [flavorRef, setFlavorRef] = useState("");
-  const [imageRef, setImageRef] = useState("");
-  const [volumeName, setVolumeName] = useState("volume-name");
-  const [serverName, setServerName] = useState("server-name");
-  const [securityGroups, setSecurityGroups] = useState("IPv4v6-SSH");
+export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProps) {
 
-  const volumeDescription = null;
-  const user = "USER";
 
+  // useEffect(() => {
+  //   console.log("jsonData:", jsonData); // jsonDataをコンソールに出力
+  // }, []); // 依存配列を空にする
+
+  console.log("jsonData:", jsonData);
+
+  
   async function create() {
-    console.log("create関数が呼ばれました");
-    console.log("選択されたサービス:", selectedService);
-    console.log("選択されたプラン:", selectedPlan ? selectedPlan.size : "未選択");
-    console.log("選択されたCPU:", selectedPlan ? selectedPlan.cpu : "未選択");
-    console.log("選択されたSSD:", selectedPlan ? selectedPlan.ssd : "未選択");
-    console.log("選択された価格:", selectedPrice);
-    console.log("選択されたアプリケーション:", selectedApp);
+    console.log("Received JsonData:", jsonData);
+    console.log(jsonData.imageRef);
+    const size = 100; // 容量
+    const flavor = jsonData.flavorId; // フレーバー -> 追加
+    const image = jsonData.imageRef; // イメージ -> 改修
+    // const image = "Docker"; // イメージデバッグ
+    const volumeName = jsonData.name; // ボリューム名
+    const ServerName = jsonData.name; // サーバー名
+    const security_groups = "IPv4v6-SSH"; //セキュリティグループ
+    const volumeDescription = jsonData.description; // 説明
+    const volume_type = jsonData.volume_type; // ボリュームタイプ
+  
 
+
+
+
+    console.log("create関数が呼ばれました"); // create関数が呼ばれたことをコンソールに出力
+    const user = "USER";
+
+
+    console.log(image);
     // イメージの取得
     const imageGet = await fetch(
-      `/api/getimageid?user=${user}&target=${selectedApp}`
+      `/api/getimageid?user=${user}&target=${image}`
     );
     const imageJson = await imageGet.json();
-    setImageRef(imageJson as string);
+    console.log(imageJson);
+    const imageRef = imageJson as string;
 
     // ボリュームの確保
     const volGetID = await fetch(`/api/getvolumeid?user=${user}`, {
@@ -44,7 +55,7 @@ export default function MoneySidebar() {
         description: volumeDescription,
         name: volumeName,
         imageRef: imageRef,
-        volume_type: "c3j1-ds02-boot",
+        volume_type,
       }),
     });
     const volIDJson = await volGetID.json();
@@ -64,14 +75,17 @@ export default function MoneySidebar() {
       }
     }
 
+    console.log("ボリューム作成完了"); // ボリューム作成完了をコンソールに出力
+    console.log(flavor);
+
     // フレーバーの取得
     const flavorGet = await fetch(
-      `/api/getflavorid?user=${user}&flavor=${selectedPlan ? selectedPlan.size : ''}`
+      `/api/getflavorid?user=${user}&flavor=${flavor}`
     );
     const flavorJson = await flavorGet.json();
     const flavorRef = flavorJson as string;
 
-    setFlavorRef(flavorRef);
+    console.log("フレーバーID:", flavorRef); // フレーバーIDをコンソールに
 
     // 作成
     const APIcreate = await fetch(`/api/create?user=${user}`, {
@@ -79,9 +93,8 @@ export default function MoneySidebar() {
       body: JSON.stringify({
         flavorRef,
         volume_id,
-        name_tag: serverName,
-        security_groups: securityGroups,
-        selectedApp,
+        name_tag: ServerName,
+        security_groups,
       }),
     });
 
