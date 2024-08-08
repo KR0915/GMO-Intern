@@ -76,6 +76,7 @@ const planDetails: PlanDetail[] = [
   { size: "64GB", cpu: "CPU 24Core", ssd: "SSD 100GB", flavorId: "flavor64GB" }
 ];
 
+const date = new Date();
 export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
@@ -84,7 +85,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<string | null>(null); // 新しい状態を追加
   const [rootPassword, setRootPassword] = useState("");
-  const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
+  const [nameTag, setNameTag] = useState("vps-" + date.getFullYear() + "-" + ("0"+(date.getMonth() + 1)).slice(-2) + "-" + ("0"+(date.getDate())).slice(-2) + "-" + date.getHours() + "-" + ("0"+(date.getMinutes())).slice(-2));
   const [showMore, setShowMore] = useState(false);
 
   const pricingData: Record<string, number[]> = {
@@ -111,7 +112,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
     setSelectedPlan(null);
     setSelectedPrice(null);
     setRootPassword("");
-    setNameTag("vps-2024-08-07-10-03");
+    setNameTag("");
   };
 
   const handleAppButtonClick = (label: string) => {
