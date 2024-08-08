@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import { selectedPlanState, selectedPriceState, selectedAppState } from '../recoil/atoms';
+import { selectedPlanState, selectedPriceState, selectedAppState, selectedServiceState, selectedOptionState } from '../recoil/atoms';
 import { MaterialSymbolsDataTableOutline } from "./icon/VPS";
 import { MdiMicrosoftWindows } from "./icon/WindowServer";
 import { BiGpuCard } from "./icon/GPUServer";
@@ -17,18 +17,6 @@ interface ServiceItem {
   name: string;
 }
 
-interface ServiceProps {
-  setSelectedPlan: (plan: string | null) => void;
-  setSelectedPrice: (price: number | null) => void;
-}
-
-interface PlanDetail {
-  size: string;
-  cpu: string;
-  ssd: string;
-  flavorId: string;
-}
-
 const services: ServiceItem[] = [
   { icon: <MaterialSymbolsDataTableOutline />, name: "VPS" },
   { icon: <MdiMicrosoftWindows />, name: "Windows Server" },
@@ -37,7 +25,7 @@ const services: ServiceItem[] = [
   { icon: <MdiDatabase />, name: "DBサーバー" },
 ];
 
-const display_rectangleButtonLabels = [
+const displayRectangleButtonLabels = [
   { label: "かんたんKUSANAGI", icon: <Fa6BrandsWordpress /> },
   { label: "Mattermost", icon: <MdiApplicationBracesOutline /> },
   { label: "Docker", icon: <LogosDockerIcon /> },
@@ -50,7 +38,7 @@ const roundButtonLabelsOS = [
   "Oracle Linux", "MIRACLE LINUX", "FreeBSD", "Arch Linux", "NetBSD", "OpenBSD"
 ];
 
-const storage_rectangleButtonLabels = [
+const storageRectangleButtonLabels = [
   "WordPress<br/>(KUSANAGI)", "Dokku", "Node.js", "webmin", "Prometheus",
   "Cacti Nagios", "Laravel", "LEMP(PHP)", "Mastodon", "Misskey",
   "Zabbix", "Ruby on Rails", "ownCloud", "Nextcloud", "GitLab",
@@ -67,7 +55,7 @@ const pricingOptions = [
   "時間課金", "１ヶ月", "３ヶ月", "６ヶ月", "１２ヶ月", "２４ヶ月", "３６ヶ月"
 ];
 
-const planDetails: PlanDetail[] = [
+const planDetails = [
   { size: "512MB", cpu: "CPU 1Core", ssd: "SSD 30GB", flavorId: "flavor512MB" },
   { size: "1GB", cpu: "CPU 2Core", ssd: "SSD 100GB", flavorId: "flavor1GB" },
   { size: "2GB", cpu: "CPU 3Core", ssd: "SSD 100GB", flavorId: "flavor2GB" },
@@ -82,13 +70,13 @@ export default function Services() {
   const [selectedPlan, setSelectedPlan] = useRecoilState(selectedPlanState);
   const [selectedPrice, setSelectedPrice] = useRecoilState(selectedPriceState);
   const [selectedApp, setSelectedApp] = useRecoilState(selectedAppState);
+  const [selectedService, setSelectedService] = useRecoilState(selectedServiceState);
 
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useRecoilState(selectedOptionState);
   const [selectedAppButton, setSelectedAppButton] = useState<string | null>(null);
   const [selectedOSButton, setSelectedOSButton] = useState<string | null>(null);
   const [selectedPricing, setSelectedPricing] = useState<string | null>(null);
   const [selectedPlanLocal, setSelectedPlanLocal] = useState<string | null>(null);
-  const [selectedService, setSelectedService] = useState<string | null>(null); 
   const [rootPassword, setRootPassword] = useState("");
   const [nameTag, setNameTag] = useState("vps-2024-08-07-10-03");
   const [showMore, setShowMore] = useState(false);
@@ -105,10 +93,12 @@ export default function Services() {
 
   const handleServiceClick = (serviceName: string) => {
     setSelectedService(serviceName);
+    console.log("選択されたサービス:", serviceName);
   };
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
+    console.log("Selected Option:", option);
     setShowMore(false);
     setSelectedAppButton(null);
     setSelectedOSButton(null);
@@ -140,23 +130,25 @@ export default function Services() {
   const handlePlanClick = (option: string) => {
     const planDetail = planDetails.find(plan => plan.size === option);
     if (planDetail) {
-      const { flavorId } = planDetail;
       setSelectedPlanLocal(option);
-      setSelectedPlan(option);
-
+      setSelectedPlan(planDetail); // PlanDetail型のオブジェクトを設定
+  
       const priceIndex = planDetails.findIndex(plan => plan.size === option);
       const price = selectedPricing ? pricingData[selectedPricing][priceIndex] : null;
-
+  
       setSelectedPrice(price);
-      console.log("Flavor ID for selected plan:", flavorId); // フレーバーIDを表示するかバックエンドに送信
+      console.log("Flavor ID for selected plan:", planDetail.flavorId);
     }
   };
-
+  
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
 
   return (
+    <div>
+      <button onClick={() => handleOptionClick("Option1")}>Option 1</button>
+      <button onClick={() => handleOptionClick("Option2")}>Option 2</button>
     <div className="flex flex-col mt-[70px]"> {/* ヘッダーの高さ分だけ下へ調整 */}
       <div className="flex" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}> {/* 背景色を透明に設定 */}
         <div className="col-span-3 bg-transparent p-4">
@@ -200,7 +192,7 @@ export default function Services() {
           {selectedOption === "アプリケーション" && (
             <div>
               <div className="grid grid-cols-3 gap-2">
-                {display_rectangleButtonLabels.map((item, index) => (
+                {displayRectangleButtonLabels.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => handleAppButtonClick(item.label)}
@@ -220,7 +212,7 @@ export default function Services() {
 
               {showMore && (
                 <div className="grid grid-cols-5 gap-2 mt-4">
-                  {storage_rectangleButtonLabels.map((label, index) => (
+                  {storageRectangleButtonLabels.map((label, index) => (
                     <button
                       key={index}
                       onClick={() => handleAppButtonClick(label)}
@@ -380,6 +372,7 @@ export default function Services() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
