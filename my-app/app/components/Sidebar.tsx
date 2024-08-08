@@ -42,8 +42,8 @@ const menuItems: MenuItem[] = [
 
 export default function Sidebar() {
   return (
-    <div className="col-span-1 bg-gray-100 p-4">
-      <div className="flex flex-col space-y-2">
+    <div className="col-span-1 bg-gray-100 h-full">
+      <div className="flex flex-col space-y-2 h-full">
         {menuItems.map((item, index) => (
           <Link href="/error/404" key={index} legacyBehavior>
             <a>

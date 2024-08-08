@@ -13,8 +13,8 @@ import { MynauiQuestionCircle } from './icon/Question';
 
 export default function Header() {
   return (
-    <header className="bg-white border-b border-blue-400">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+    <header className="bg-white border-b border-blue-400 fixed top-0 left-0 w-full z-10 shadow-md">
+      <div className="container mx-auto flex justify-between items-center py-3 px-6">
         <div className="flex items-center space-x-10">
           <div className="mx-4">
             <Image src="/images/conoHa.png" alt="Logo" width={125} height={38} className="h-10" />
