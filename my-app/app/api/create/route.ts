@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       }),
     });
     const data = await response.json();
-    return Response.json(data);
+    return Response.json(data.server.id);
   } catch (error) {
     console.log(error);
     throw error;
