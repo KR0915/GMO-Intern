@@ -64,10 +64,17 @@ export default function MoneySidebar({ plan, price }: MoneySidebarProps) {
 
 
   return (
-    <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4">
+    <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4 bg-opacity-80">
       <div className="mt-4">
-        <p>選択されたプラン: {plan || '未選択'}</p>
-        <p>価格: {price ? `${price.toLocaleString()} 円 /月` : '未選択'}</p>
+        <div className='flex justify-between'>
+          <p className=''>選択されたプラン:</p>
+          <p className=''>{plan ? plan : '未選択'}</p>
+        </div>
+        <div className='flex justify-between'>
+          <p className=''>価格:</p>
+          <p>{price ? `${price.toLocaleString()} 円 /月` : '未選択'}</p>
+        </div>
+        <div className='border-b-2 border-gray-300'></div>
         <div className="flex justify-center items-center mt-4">
           <button
             onClick={() => {

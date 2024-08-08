@@ -186,6 +186,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
               </button>
             ))}
           </div>
+          <div className='border-b-2 border-b-slate-400 mb-2'></div>
 
           {selectedOption === "アプリケーション" && (
             <div>
@@ -342,6 +343,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice }: ServiceP
           )}
 
           {/* Rootパスワードとネームタグの入力欄 */}
+          <div className='border-b-2 border-b-slate-400 mt-2'></div>
           <div className="col-span-3">
             <div className="flex flex-col items-center mb-4">
               <label htmlFor="rootPassword">Rootパスワード:</label>
