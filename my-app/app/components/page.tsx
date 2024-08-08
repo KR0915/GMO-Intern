@@ -1,13 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import MoneySidebar from './MoneySidebar';
-import Service from './Service'; 
+import MoneySidebar from './MoneySidebar'; // MoneySidebarのインポートを追加
 
 export default function Page() {
   const [token, setToken] = useState("");
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
 
   const size = 100; // 容量
   const flavorRef = "f2a77529-1815-43a2-bc14-1f3f6b09079c"; // FlavorID
@@ -17,14 +14,14 @@ export default function Page() {
   const volumeDescription = null;
   const volumeName = "my-name";
 
-  async function test()
-  {
-    console.log("TEST");
+  async function getToken() { 
+    const res = await fetch("/api/gettoken?user=d4b10aeb-7f1e-4e21-96c4-528a5afacd5b");
+    const token = await res.json();
+    setToken(token);
   }
 
-
   async function create() {
-    console.log("Create function executed"); // 追加ボタンが押されたことを確認するためのログ
+    console.log("create関数が呼ばれました"); // create関数が呼ばれたことをコンソールに出力
 
     const user = "USER";
 
@@ -42,16 +39,16 @@ export default function Page() {
 
     const volIDJson = await volGetID.json();
     var volume_id = volIDJson.volume?.id as string;
-    console.log(volume_id);
+    console.log("ボリュームID:", volume_id); // ボリュームIDをコンソールに出力
 
     // 完了するまで待機
-    while (true) {
+    while(true){
       const volGetDetail = await fetch(`/api/getvolumedetail?volume_id=${volume_id}`);
       const volDetail = await volGetDetail.json();
       const status = volDetail.volume.status;
-      console.log(status);
-      if (status != "creating") {
-        break;
+      console.log("ボリュームステータス:", status); // ボリュームステータスをコンソールに出力
+      if(status !="creating"){
+        break
       }
     }
 
@@ -67,13 +64,15 @@ export default function Page() {
     });
 
     const createdJson = await APIcreate.json();
-    console.log(JSON.stringify(createdJson));
+    console.log("作成結果:", JSON.stringify(createdJson)); // 作成結果をコンソールに出力
   }
 
   return (
     <div className="text-center mt-8">
-      <Service setSelectedPlan={setSelectedPlan} setSelectedPrice={setSelectedPrice} />
-      <MoneySidebar plan={selectedPlan} price={selectedPrice} onCreate={create} />
+      <div>
+        <MoneySidebar plan={null} price={null}  />
+        <p>{token}</p>
+      </div>
     </div>
   );
 }
