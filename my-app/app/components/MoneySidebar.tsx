@@ -137,7 +137,7 @@ export default function MoneySidebar({
         追加
         </button>
         <div className="flex items-center">
-        <RunScript IP={"IPAdress"} />
+        <RunScript IP={IPAddress} />
         </div>
         </div>
 
