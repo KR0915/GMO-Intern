@@ -55,7 +55,7 @@ export default function Sidebar() {
           <div key={index}>
             {item.subItems ? (
               <>
-                <div onClick={() => toggleSubMenu(item.label)} className={`flex items-center p-3 rounded transition-colors cursor-pointer ${openItems[item.label] ? 'bg-blue-400 text-white' : 'hover:bg-blue-200'}`}>
+                <div onClick={() => toggleSubMenu(item.label)} className={`flex items-center p-3 rounded transition-colors cursor-pointer ${openItems[item.label] ? 'bg-blue-400 text-white' : 'hover:bg-blue-200 text-gray-700'}`}>
                   <span className="mr-3 text-xl">{item.icon}</span>
                   <span className="text-lg">{item.label}</span>
                   {<span className="ml-auto">{openItems[item.label] ? '▲' : '▼'}</span>}
@@ -64,7 +64,7 @@ export default function Sidebar() {
                   <div className="bg-blue-100">
                     {item.subItems.map((subItem, subIndex) => (
                       <Link href="/custom404" key={subIndex} legacyBehavior>
-                        <a className="block px-5 py-2 hover:bg-blue-200">{subItem}</a>
+                        <a className="block px-5 py-2 hover:bg-blue-200 text-gray-700">{subItem}</a>
                       </Link>
                     ))}
                   </div>
@@ -73,7 +73,7 @@ export default function Sidebar() {
             ) : (
               <Link href="/custom404" key={index} legacyBehavior>
                 <a className={`flex items-center p-3 rounded transition-colors cursor-pointer 
-                  ${item.label === 'サーバー追加' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-blue-200'}`}>
+                  ${item.label === 'サーバー追加' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-blue-200 text-gray-700'}`}>
                   <span className="mr-3 text-xl">{item.icon}</span>
                   <span className="text-lg">{item.label}</span>
                 </a>
