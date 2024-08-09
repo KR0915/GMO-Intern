@@ -62,74 +62,101 @@
 //   },
 // };
 
-import { NextRequest, NextResponse } from 'next/server';
-import { Client } from 'ssh2';
-import fs from 'fs';
-import path from 'path';
+import { NextRequest, NextResponse } from "next/server";
+import { Client } from "ssh2";
+import fs from "fs";
+import path from "path";
 
 export async function GET(req: NextRequest) {
+  console.log("GET /api/runscript");
   const { searchParams } = new URL(req.url);
-  const sshHost = searchParams.get('host') as string;
+  const sshHost = searchParams.get("host") as string;
+  console.log(sshHost);
 
   const sshPassword = process.env.SSH_PASSWORD;
-  const sshUser = 'root';
-  const localScriptPath = path.join(process.cwd(), 'scripts', 'flask.sh');
-  const remoteScriptPath = '/root/flask.sh';
+  const sshUser = "root";
+  const localScriptPath = path.join(process.cwd(), "scripts", "flask.sh");
+  const remoteScriptPath = "/root/flask.sh";
 
   if (!sshPassword) {
-    return new NextResponse(JSON.stringify({ error: "SSH password is not set in the environment variables." }), { status: 500 });
+    return new NextResponse(
+      JSON.stringify({
+        error: "SSH password is not set in the environment variables.",
+      }),
+      { status: 500 }
+    );
   }
 
   const conn = new Client();
 
   return new Promise((resolve, reject) => {
-    conn.on('ready', () => {
-      console.log('Client :: ready');
+    conn
+      .on("ready", () => {
+        console.log("Client :: ready");
 
-      // SCPファイル転送
-      conn.sftp((err, sftp) => {
-        if (err) {
-          conn.end();
-          return reject(new NextResponse(JSON.stringify({ error: err.message }), { status: 500 }));
-        }
+        // SCPファイル転送
+        conn.sftp((err, sftp) => {
+          if (err) {
+            conn.end();
+            return reject(
+              new NextResponse(JSON.stringify({ error: err.message }), {
+                status: 500,
+              })
+            );
+          }
 
-        const readStream = fs.createReadStream(localScriptPath);
-        const writeStream = sftp.createWriteStream(remoteScriptPath);
+          const readStream = fs.createReadStream(localScriptPath);
+          const writeStream = sftp.createWriteStream(remoteScriptPath);
 
-        writeStream.on('close', () => {
-          console.log('File transferred successfully');
+          writeStream.on("close", () => {
+            console.log("File transferred successfully");
 
-          // リモートサーバーでシェルスクリプトを実行
-          conn.exec(`bash ${remoteScriptPath}`, (err, stream) => {
-            if (err) {
-              conn.end();
-              return reject(new NextResponse(JSON.stringify({ error: err.message }), { status: 500 }));
-            }
+            // リモートサーバーでシェルスクリプトを実行
+            conn.exec(`bash ${remoteScriptPath}`, (err, stream) => {
+              if (err) {
+                conn.end();
+                return reject(
+                  new NextResponse(JSON.stringify({ error: err.message }), {
+                    status: 500,
+                  })
+                );
+              }
 
-            let output = '';
-            let stderrOutput = '';
-            stream.on('close', (code, signal) => {
-              console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
-              conn.end();
-              resolve(new NextResponse(JSON.stringify({ output: output + stderrOutput }), { status: 200 }));
-            }).on('data', (data) => {
-              console.log('STDOUT: ' + data);
-              output += data;
-            }).on('error', (err) => {
-              console.error('STDERR: ' + err);
-              stderrOutput += err;
+              let output = "";
+              let stderrOutput = "";
+              stream
+                .on("close", (code, signal) => {
+                  console.log(
+                    "Stream :: close :: code: " + code + ", signal: " + signal
+                  );
+                  conn.end();
+                  resolve(
+                    new NextResponse(
+                      JSON.stringify({ output: output + stderrOutput }),
+                      { status: 200 }
+                    )
+                  );
+                })
+                .on("data", (data) => {
+                  console.log("STDOUT: " + data);
+                  output += data;
+                })
+                .on("error", (err) => {
+                  console.error("STDERR: " + err);
+                  stderrOutput += err;
+                });
             });
           });
-        });
 
-        readStream.pipe(writeStream);
+          readStream.pipe(writeStream);
+        });
+      })
+      .connect({
+        host: sshHost,
+        port: 22,
+        username: sshUser,
+        password: sshPassword,
       });
-    }).connect({
-      host: sshHost,
-      port: 22,
-      username: sshUser,
-      password: sshPassword
-    });
   });
 }
 

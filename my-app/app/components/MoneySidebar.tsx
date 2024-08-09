@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import RunScript from './RunScript';
+import React, { useState, useEffect } from "react";
+import RunScript from "./RunScript";
 
 interface MoneySidebarProps {
   plan: string | null;
@@ -7,17 +7,23 @@ interface MoneySidebarProps {
   jsonData: any; // jsonData プロパティを追加
 }
 
-export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProps) {
-
-
+export default function MoneySidebar({
+  plan,
+  price,
+  jsonData,
+}: MoneySidebarProps) {
   // useEffect(() => {
   //   console.log("jsonData:", jsonData); // jsonDataをコンソールに出力
   // }, []); // 依存配列を空にする
 
   console.log("jsonData:", jsonData);
 
-  const [IPAddress, setIPAddress] = useState<string | null>(null);
-  
+  const [IPAddress, setIPAddress] = useState<string>("");
+
+  const handleSetIPAddress = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIPAddress(event.target.value);
+  };
+
   async function create() {
     console.log("Received JsonData:", jsonData);
     console.log(jsonData.imageRef);
@@ -30,10 +36,6 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
     const security_groups = "IPv4v6-SSH"; //セキュリティグループ
     const volumeDescription = jsonData.description; // 説明
     const volume_type = jsonData.volume_type; // ボリュームタイプ
-  
-
-
-
 
     console.log("create関数が呼ばれました"); // create関数が呼ばれたことをコンソールに出力
     const user = "USER";
@@ -65,12 +67,14 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
 
     // 完了するまで待機
     while (true) {
-      const volGetDetail = await fetch(`/api/getvolumedetail?volume_id=${volume_id}`);
+      const volGetDetail = await fetch(
+        `/api/getvolumedetail?volume_id=${volume_id}`
+      );
       const volDetail = await volGetDetail.json();
       const status = volDetail.volume.status;
       console.log("ボリュームステータス:", status); // ボリュームステータスをコンソールに出力
       if (status != "creating") {
-        break
+        break;
       }
     }
 
@@ -86,7 +90,6 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
 
     console.log("フレーバーID:", flavorRef); // フレーバーIDをコンソールに
 
-
     // 作成
     const APIcreate = await fetch(`/api/create?user=${user}`, {
       method: "POST",
@@ -100,7 +103,9 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
     const serverID = await APIcreate.json(); // serverID
     console.log("サーバーID:", JSON.stringify(serverID)); // 作成結果をコンソールに出力
 
-    const GetServerDetail = await fetch(`/api/getserverdetail?serverid=${serverID}`);
+    const GetServerDetail = await fetch(
+      `/api/getserverdetail?serverid=${serverID}`
+    );
     console.log("hello");
     const IP = await GetServerDetail.json();
     setIPAddress(IP);
@@ -109,19 +114,18 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
     console.log("IPアドレス:", JSON.stringify(IP)); // 作成結果をコンソールに出力
   }
 
-
   return (
     <div className="ml-[1rem] border-l border-gray-400 pl-2 mt-10 bg-white sticky top-[130px] rounded-lg mx-4 p-4 bg-opacity-80">
       <div className="mt-4">
-        <div className='flex justify-between'>
-          <p className=''>選択されたプラン:</p>
-          <p className=''>{plan ? plan : '未選択'}</p>
+        <div className="flex justify-between">
+          <p className="">選択されたプラン:</p>
+          <p className="">{plan ? plan : "未選択"}</p>
         </div>
-        <div className='flex justify-between'>
-          <p className=''>価格:</p>
-          <p>{price ? `${price.toLocaleString()} 円 /月` : '未選択'}</p>
+        <div className="flex justify-between">
+          <p className="">価格:</p>
+          <p>{price ? `${price.toLocaleString()} 円 /月` : "未選択"}</p>
         </div>
-        <div className='border-b-2 border-gray-300'></div>
+        <div className="border-b-2 border-gray-300"></div>
         <div className="flex justify-center items-center mt-4">
           <button
             onClick={() => {
@@ -132,7 +136,19 @@ export default function MoneySidebar({ plan, price, jsonData }: MoneySidebarProp
           >
             追加
           </button>
-          <RunScript />
+          <RunScript IP={IPAddress} />
+        </div>
+
+        <div>
+          <p>
+            IPAddress:{" "}
+            <input
+              type="text"
+              value={IPAddress}
+              onChange={handleSetIPAddress}
+              placeholder="160.251.###.###"
+            />
+          </p>
         </div>
       </div>
     </div>
