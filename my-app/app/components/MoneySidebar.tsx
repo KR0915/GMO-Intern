@@ -126,17 +126,19 @@ export default function MoneySidebar({
           <p>{price ? `${price.toLocaleString()} 円 /月` : "未選択"}</p>
         </div>
         <div className="border-b-2 border-gray-300"></div>
-        <div className="flex justify-center items-center mt-4">
-          <button
-            onClick={() => {
-              console.log("追加ボタンがクリックされました"); // 追加ボタンがクリックされたことをコンソールに出力
-              create();
-            }}
-            className="bg-blue-500 text-white py-2 px-4 rounded"
-          >
-            追加
-          </button>
-          <RunScript IP={IPAddress} />
+        <div className="flex flex-col justify-center items-center mt-4 space-y-4">
+        <button
+          onClick={() => {
+          console.log("追加ボタンがクリックされました"); // 追加ボタンがクリックされたことをコンソールに出力
+          create();
+          }}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-17 rounded shadow-lg transition duration-300"
+        >
+        追加
+        </button>
+        <div className="flex items-center">
+        <RunScript IP={"IPAdress"} />
+        </div>
         </div>
 
         <div>
