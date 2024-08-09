@@ -18,13 +18,6 @@ interface ServiceItem {
   name: string;
 }
 
-/*
-const sendJsonData = useCallback ((data: any) => {
-  // Function implementation
-  console.log("Data sent:", data);
-}, []);
-*/
-
 interface ServiceProps {
   setSelectedPlan: (plan: string | null) => void;
   setSelectedPrice: (price: number | null) => void;
@@ -99,9 +92,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
   const [nameTag, setNameTag] = useState<string>("");
   const [showMore, setShowMore] = useState(false);
 
-
-  
-  
   const pricingData: Record<string, number[]> = {
     "時間課金": [750, 1064, 2032, 3968, 8082, 15730, 31460, 59290],
     "１ヶ月": [459, 762, 1258, 2407, 4827, 9746, 22099, 44198],
@@ -112,9 +102,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
     "３６ヶ月": [296, 468, 616, 1268, 2394, 5393, 13868, 28493]
   };
 
-  // const handleServiceClick = (serviceName: string) => {
-  //   setSelectedService(serviceName);
-  // };
   useEffect(() => {
     const date = new Date();
     setNameTag(
@@ -132,13 +119,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
       volume_type: "c3j1-ds02-boot",
       flavorId: selectedPlanLocal ? planDetails.find(plan => plan.size === selectedPlanLocal)?.flavorId : null,
     };
-
-    // console.log("selectedPlanLocal:", selectedPlanLocal);
-    // console.log("nameTag:", nameTag);
-    // console.log("selectedOSButton:", selectedOSButton);
-    // console.log("selectedAppButton:", selectedAppButton);
-    // console.log("jsonData:", jsonData);
-    // console.log("Sending JSON data:", jsonData);
 
     sendJsonData(jsonData);
   }, [selectedPlanLocal, nameTag, selectedOSButton, selectedAppButton, sendJsonData]);
@@ -189,28 +169,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
     }
   };
 
-  // const [output, setOutput] = useState('');
-
-  // const RunScript = async () => {
-  //     try {
-  //         console.log("Running script...wwwwwww");
-  //         const res = await fetch("/api/runscript", {method: "GET"});
-  //         const data = await res.json();
-
-  //         if (res.ok) {
-  //             console.log("API call successful:", data.output);
-  //             setOutput(data.output);
-  //         } else {
-  //             console.error("API call error:", data.error);
-  //             setOutput(`Error: ${data.error}`);
-  //         }
-
-  //     } catch (error) {
-  //     console.error("Fetch error:", (error as Error).message);
-  //       setOutput(`Fetch error: ${(error as Error).message}`);
-  //     }
-  // }
-
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
@@ -247,8 +205,8 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                 onClick={() => handleOptionClick(option)}
                 className={`rounded px-4 py-2 mx-2 ${
                   selectedOption === option
-                    ? "bg-blue-600 text-white"
-                    : "bg-blue-500 text-white"
+                    ? "bg-blue-400 text-white border-blue-400"
+                    : "bg-white border border-gray-300 text-gray-700 hover:border-blue-400 hover:text-blue-400"
                 }`}
               >
                 {option}
@@ -266,7 +224,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                     onClick={() => handleAppButtonClick(item.label)}
                     className={`h-20 w-full border border-gray-300 rounded text-center px-2 py-1 leading-tight ${
                       selectedAppButton === item.label
-                        ? "bg-blue-400 text-white"
+                        ? "bg-blue-400 text-white border-blue-400"
                         : "bg-white text-gray-700 hover:border-blue-400 hover:text-blue-400"
                     }`}
                   >
@@ -286,7 +244,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                       onClick={() => handleAppButtonClick(label)}
                       className={`h-20 w-full border border-gray-300 rounded text-center px-2 py-1 leading-tight ${
                         selectedAppButton === label
-                          ? "bg-blue-400 text-white"
+                          ? "bg-blue-400 text-white border-blue-400"
                           : "bg-white text-gray-700 hover:border-blue-400 hover:text-blue-400"
                       }`}
                       dangerouslySetInnerHTML={{ __html: label }}
@@ -313,7 +271,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                       onClick={() => handlePricingClick(option)}
                       className={`rounded px-4 py-2 ${
                         selectedPricing === option
-                          ? "bg-blue-400 text-white"
+                          ? "bg-blue-400 text-white border-blue-400"
                           : "bg-white border border-gray-300 text-gray-700 hover:border-blue-400 hover:text-blue-400"
                       }`}
                     >
@@ -332,7 +290,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                       onClick={() => handlePlanClick(plan.size)}
                       className={`rounded px-4 py-2 ${
                         selectedPlanLocal === plan.size
-                          ? "bg-blue-400 text-white"
+                          ? "bg-blue-400 text-white border-blue-400"
                           : "bg-white border border-gray-300 text-gray-700 hover:border-blue-400 hover:text-blue-400"
                       }`}
                     >
@@ -359,7 +317,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                     onClick={() => handleOSButtonClick(label)}
                     className={`h-24 w-36 rounded-full border border-gray-300 text-center px-4 py-2 leading-tight ${
                       selectedOSButton === label
-                        ? "bg-blue-300 text-white"
+                        ? "bg-blue-400 text-white border-blue-400"
                         : "bg-white text-gray-700 hover:border-blue-400 hover:text-blue-400"
                     }`}
                   >
@@ -376,7 +334,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                       onClick={() => handlePricingClick(option)}
                       className={`rounded px-4 py-2 ${
                         selectedPricing === option
-                          ? "bg-blue-400 text-white"
+                          ? "bg-blue-400 text-white border-blue-400"
                           : "bg-white border border-gray-300 text-gray-700 hover:border-blue-400 hover:text-blue-400"
                       }`}
                     >
@@ -394,7 +352,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                       onClick={() => handlePlanClick(plan.size)}
                       className={`rounded px-4 py-2 ${
                         selectedPlanLocal === plan.size
-                          ? "bg-blue-400 text-white"
+                          ? "bg-blue-400 text-white border-blue-400"
                           : "bg-white border border-gray-300 text-gray-700 hover:border-blue-400 hover:text-blue-400"
                       }`}
                     >
@@ -439,14 +397,6 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
               <div className="mb-16"> 
               <Option />
             </div>
-            {/* <div className="flex justify-center mb-4">
-              <button
-                onClick={RunScript}
-                className="bg-blue-500 text-white rounded px-4 py-2"
-              >
-                シェルスクリプトを実行する
-              </button>
-            </div> */}
           </div>
         </div>
       </div>
