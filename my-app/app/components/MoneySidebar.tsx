@@ -107,7 +107,7 @@ export default function MoneySidebar({
       `/api/getserverdetail?serverid=${serverID}`
     );
     console.log("hello");
-    const IP = await GetServerDetail.json();
+    const IP = (await GetServerDetail.json()) as string;
     setIPAddress(IP);
 
     console.log("IPアドレス:", IP); // 作成結果をコンソールに出力

@@ -8,7 +8,7 @@ export default function RunScript({ IP }: ServiceProps) {
   const [output, setOutput] = useState("");
   //const IP = "Hoge";
 
-  const RunScript = async () => {
+  const handleRunScript = async () => {
     console.log("IP:", IP);
     try {
       console.log("Running script...");
@@ -26,17 +26,17 @@ export default function RunScript({ IP }: ServiceProps) {
       console.error("Fetch error:", (error as Error).message);
       setOutput(`Fetch error: ${(error as Error).message}`);
     }
-
-    return (
-      <div className="w-full h-auto">
-        <button
-          onClick={RunScript}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-xs py-2 px-2 rounded shadow-lg transition duration-300"
-        >
-          シェルスクリプトを実行する
-        </button>
-        {/* <pre>{output}</pre> */}
-      </div>
-    );
   };
+
+  return (
+    <div className="w-full h-auto">
+      <button
+        onClick={handleRunScript}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-xs py-2 px-2 rounded shadow-lg transition duration-300"
+      >
+        シェルスクリプトを実行する
+      </button>
+      {/* <pre>{output}</pre> */}
+    </div>
+  );
 }
