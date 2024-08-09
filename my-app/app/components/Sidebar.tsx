@@ -49,7 +49,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="col-span-1 bg-gray-100 p-4 mt-[70px] fixed h-[calc(100vh-64px)] overflow-y-auto">
+    <div className="col-span-1 bg-white p-4 mt-[70px] fixed h-[calc(100vh-64px)] overflow-y-auto">
       <div className="flex flex-col space-y-2">
         {menuItems.map((item, index) => (
           <div key={index}>
