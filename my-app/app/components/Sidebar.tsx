@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { EntypoPlus } from './icon/Plus';
 import { StreamlineDatabaseServer1Solid } from './icon/Server';
@@ -27,11 +27,11 @@ const menuItems: MenuItem[] = [
   { icon: <StreamlineComputerStorageHardDrive1DiskComputerDeviceElectronicsDiscDriveRaid />, label: 'ストレージ' },
   { icon: <SubwayImage />, label: 'イメージ' },
   { icon: <StreamlineInterfaceHierarchy2NodeOrganizationLinksStructureLinkNodesNetworkHierarchy />, label: 'ネットワーク', subItems: ['追加IPアドレス', 'プライベートネットワーク', 'ロードバランサー'] },
-  { icon: <CodiconKey />, label: 'セキュリティ' },
+  { icon: <CodiconKey />, label: 'セキュリティ', subItems: ['SSH Key', 'WAF', 'SSL', 'セキュリティグループ'] },
   { icon: <CodiconFileSubmodule />, label: 'オブジェクトストレージ' },
   { icon: <CodiconGlobe />, label: 'DNS' },
   { icon: <CodiconFile />, label: 'ライセンス' },
-  { icon: <MaterialSymbolsDomain />, label: 'ドメイン' },
+  { icon: <MaterialSymbolsDomain />, label: 'ドメイン', subItems: ['ドメイン', '移管', '転送設定'] },
   { icon: <AntDesignApiFilled />, label: 'API' },
   { icon: <MaterialSymbolsHelpOutline />, label: 'サポート' },
   { icon: <MaterialSymbolsFeedbackOutline />, label: 'フィードバック' },
@@ -39,21 +39,47 @@ const menuItems: MenuItem[] = [
 ];
 
 export default function Sidebar() {
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
+
+  const toggleSubMenu = (label: string) => {
+    setOpenItems(prev => ({
+      ...prev,
+      [label]: !prev[label] // Toggle the current state
+    }));
+  };
+
   return (
-    <div className="col-span-1 bg-gray-100 p-4 mt-[70px] fixed h-[calc(100vh-64px)] overflow-y-auto">
+    <div className="col-span-1 bg-white p-4 mt-[70px] fixed h-[calc(100vh-64px)] overflow-y-auto">
       <div className="flex flex-col space-y-2">
         {menuItems.map((item, index) => (
-          <Link href="/not-found" key={index} legacyBehavior>
-            <a>
-              <li
-                className={`flex items-center p-3 rounded transition-colors cursor-pointer 
-                  ${item.label === 'サーバー追加' ? 'bg-blue-400 text-white' : 'hover:bg-blue-200'}`}
-              >
-                <span className="mr-3 text-xl">{item.icon}</span>
-                <span className="text-lg">{item.label}</span>
-              </li>
-            </a>
-          </Link>
+          <div key={index}>
+            {item.subItems ? (
+              <>
+                <div onClick={() => toggleSubMenu(item.label)} className={`flex items-center p-3 rounded transition-colors cursor-pointer ${openItems[item.label] ? 'bg-blue-400 text-white' : 'hover:bg-blue-200'}`}>
+                  <span className="mr-3 text-xl">{item.icon}</span>
+                  <span className="text-lg">{item.label}</span>
+                  {<span className="ml-auto">{openItems[item.label] ? '▲' : '▼'}</span>}
+                </div>
+                {openItems[item.label] && (
+                  <div className="bg-blue-100">
+                    {item.subItems.map((subItem, subIndex) => (
+                      <Link href="/custom404" key={subIndex} legacyBehavior>
+                        <a className="block px-5 py-2 hover:bg-blue-200">{subItem}</a>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link href="/custom404" key={index} legacyBehavior>
+                <a className={`flex items-center p-3 rounded transition-colors cursor-pointer 
+                  ${item.label === 'サーバー追加' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-blue-200'}`}>
+                  <span className="mr-3 text-xl">{item.icon}</span>
+                  <span className="text-lg">{item.label}</span>
+                </a>
+              </Link>
+            )}
+          </div>
         ))}
       </div>
     </div>
