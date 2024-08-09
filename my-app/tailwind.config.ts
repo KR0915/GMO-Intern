@@ -13,6 +13,12 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "custom-bg": "url('/images/background.jpg')", // ここに背景画像を追加
       },
+      padding: {
+        '15': '3.75rem', // 15 * 0.25rem = 3.75rem
+        '16': '4rem', 
+        '17': '4.25rem', // 17 * 0.25rem = 4.25rem
+        '18': '4.5rem',  // 18 * 0.25rem = 4.5rem
+      },
     },
   },
   plugins: [],

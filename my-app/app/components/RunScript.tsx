@@ -24,10 +24,10 @@ export default function RunScript() {
     }
   
     return (
-      <div className="flex justify-center mb-4">
+      <div className="w-full h-auto">
         <button
           onClick={RunScript}
-          className="bg-blue-500 text-white rounded px-4 py-2"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-xs py-2 px-2 rounded shadow-lg transition duration-300"
         >
           シェルスクリプトを実行する
         </button>
