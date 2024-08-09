@@ -15,7 +15,7 @@ export default function NotFound() {
         setLoading(true);
         setTimeout(() => {
             router.push('/dashboard');
-        }, 700); // 2秒間のローディングを挟む
+        }, 700); // 0.7秒間のローディングを挟む
     };
 
     return (
@@ -24,14 +24,14 @@ export default function NotFound() {
                 <Loading />
             ) : (
                 <>
-                    <h1 className="text-4xl">404 - Page Not Found</h1>
-                    <p className="text-2xl">お探しのページは見つかりませんでした。</p>
-                    <br></br>
+                    <h1 className="text-4xl text-sky-500">404 - Page Not Found</h1>
+                    <p className="text-2xl text-sky-500">お探しのページは見つかりませんでした。</p>
+                    <br />
                     <Image src="/images/404-2.png" alt="404" width={240} height={240} />
-                    <br></br>
-                    <br></br>
+                    <br />
+                    <br />
                     <Link href="/dashboard" legacyBehavior>
-                        <a className="text-black hover:text-blue-500 text-2xl" onClick={handleLinkClick}>
+                        <a className="text-sky-500 hover:text-sky-700 text-2xl" onClick={handleLinkClick}>
                             コントロールパネルに戻る
                         </a>
                     </Link>
