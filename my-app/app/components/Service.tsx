@@ -218,7 +218,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
   return (
     <div className="flex flex-col mt-[70px]"> {/* ヘッダーの高さ分だけ下へ調整 */}
       <div className="flex" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}> {/* 背景色を透明に設定 */}
-        <div className="col-span-3 bg-transparent p-4">
+      <div className="col-span-3 bg-transparent p-4 mt-[30px]"> 
           <h1 className="text-2xl font-bold text-center mb-4">サービス</h1>
           <div className="grid grid-cols-4 gap-4">
             {services.map(service => (
@@ -238,6 +238,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
             ))}
           </div>
 
+          <div className="mb-12"></div>
           <h1 className="text-2xl font-bold text-center mt-4 mb-4">イメージタイプ</h1>
           <div className="flex justify-center items-center mb-4">
             {imageTypeOptions.map(option => (
@@ -412,6 +413,7 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
 
           {/* Rootパスワードとネームタグの入力欄 */}
           <div className='border-b-2 border-b-slate-400 mt-2'></div>
+          <div className="mb-12"></div>
           <div className="col-span-3">
             <div className="flex flex-col items-center mb-4">
               <label htmlFor="rootPassword">Rootパスワード:</label>
@@ -433,7 +435,8 @@ export default function Services({ setSelectedPlan, setSelectedPrice,sendJsonDat
                 className="px-4 py-2 border border-gray-300 rounded"
               />
             </div>
-            <div>
+            <div className="mb-12"></div>
+              <div className="mb-16"> 
               <Option />
             </div>
             {/* <div className="flex justify-center mb-4">
